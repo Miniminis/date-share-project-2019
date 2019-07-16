@@ -1,0 +1,113 @@
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    html {
+        background: linear-gradient(to top, #bde8fa, #ffd6dd) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+
+    #main_wrap {
+        width: 980px;
+        margin: auto;
+    }
+
+    #logo {
+        text-align: left;
+        margin: 30px;
+        color: #676666;
+    }
+
+    #header a {
+        text-decoration: none;
+        color: black;
+    }
+
+    #my {
+        text-align: right;
+        margin: 10px 15px 0 0;
+    }
+
+    #my a {
+        font-size: 14px;
+    }
+
+    #nav {
+        border-bottom: solid 1px #333;
+        border-top: solid 1px #333;
+    }
+
+    #nav ul {
+        display: block;
+        list-style: none;
+        overflow: hidden;
+        color: black;
+    }
+
+    #nav ul > li {
+        display: block;
+        float: left;
+    }
+
+    #nav ul > li > a {
+        color: black;
+        display: block;
+        width: 100px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    #nav ul > li > a:hover {
+        font-weight: bold;
+        text-align: center;
+        color: #333;
+    }
+
+    .input_t {
+        background-color: transparent;
+        border: 0;
+        border-bottom: solid 1px;
+        width: 100%;
+        height: 20px;
+        font-size: 15px;
+        padding: 3px 0;
+    }
+
+    .input_b {
+        width: 100%;
+        background-color: transparent;
+        border: solid 1px;
+        padding: 8px;
+    }
+
+    .input_b:first-child {
+        margin-bottom: 8px;
+    }
+
+    #login_form_wrap {
+        text-align: left;
+        padding: 300px;
+        width: 300px;
+        margin-top: -130px;
+    }
+
+    #login_form_wrap h1 {
+        margin: 0 0 20px 0;
+        text-align: center;
+    }
+
+    #login_form_wrap div {
+        padding: 5px 0;
+    }
+
+    #footer {
+        font-size: 14px;
+        text-align: center;
+        padding: 20px;
+    }
