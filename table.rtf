@@ -1,0 +1,495 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset129 \'b8\'bc\'c0\'ba \'b0\'ed\'b5\'f1;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang18\f0\fs20 ALTER TABLE dateuser\par
+\tab DROP\par
+\tab\tab PRIMARY KEY\par
+\tab\tab CASCADE\par
+\tab\tab KEEP INDEX;\par
+\par
+DROP INDEX PK_dateuser;\par
+\par
+/* \'c8\'b8\'bf\'f8 */\par
+DROP TABLE dateuser \par
+\tab CASCADE CONSTRAINTS;\par
+\par
+/* \'c8\'b8\'bf\'f8 */\par
+CREATE TABLE dateuser (\par
+\tab u_num INTEGER NOT NULL, /* \'c8\'b8\'bf\'f8\'b9\'f8\'c8\'a3 */\par
+\tab u_id VARCHAR2(40) NOT NULL, /* \'c8\'b8\'bf\'f8\'be\'c6\'c0\'cc\'b5\'f0 */\par
+\tab u_pw VARCHAR2(16) NOT NULL, /* \'c8\'b8\'bf\'f8\'ba\'f1\'b9\'d0\'b9\'f8\'c8\'a3 */\par
+\tab u_name VARCHAR2(50) NOT NULL, /* \'c8\'b8\'bf\'f8\'c0\'cc\'b8\'a7 */\par
+\tab u_bday DATE NOT NULL, /* \'bb\'fd\'b3\'e2\'bf\'f9\'c0\'cf */\par
+\tab u_regdate DATE NOT NULL, /* \'c8\'b8\'bf\'f8\'b0\'a1\'c0\'d4\'b3\'af\'c2\'a5 */\par
+\tab u_gender CHAR(1) NOT NULL /* \'bc\'ba\'ba\'b0 */\par
+);\par
+\par
+COMMENT ON TABLE dateuser IS '\'c8\'b8\'bf\'f8';\par
+\par
+COMMENT ON COLUMN dateuser.u_num IS '\'c8\'b8\'bf\'f8\'b9\'f8\'c8\'a3';\par
+\par
+COMMENT ON COLUMN dateuser.u_id IS '\'c8\'b8\'bf\'f8\'be\'c6\'c0\'cc\'b5\'f0';\par
+\par
+COMMENT ON COLUMN dateuser.u_pw IS '\'c8\'b8\'bf\'f8\'ba\'f1\'b9\'d0\'b9\'f8\'c8\'a3';\par
+\par
+COMMENT ON COLUMN dateuser.u_name IS '\'c8\'b8\'bf\'f8\'c0\'cc\'b8\'a7';\par
+\par
+COMMENT ON COLUMN dateuser.u_bday IS '\'bb\'fd\'b3\'e2\'bf\'f9\'c0\'cf';\par
+\par
+COMMENT ON COLUMN dateuser.u_regdate IS '\'c8\'b8\'bf\'f8\'b0\'a1\'c0\'d4\'b3\'af\'c2\'a5';\par
+\par
+COMMENT ON COLUMN dateuser.u_gender IS '\'bc\'ba\'ba\'b0';\par
+\par
+CREATE UNIQUE INDEX PK_dateuser\par
+\tab ON dateuser (\par
+\tab\tab u_num ASC\par
+\tab );\par
+\par
+ALTER TABLE dateuser\par
+\tab ADD\par
+\tab\tab CONSTRAINT PK_dateuser\par
+\tab\tab PRIMARY KEY (\par
+\tab\tab\tab u_num\par
+\tab\tab );\par
+        \par
+        \par
+        \par
+\par
+\par
+ALTER TABLE message\par
+\tab DROP\par
+\tab\tab CONSTRAINT FK_dateuser_TO_message\par
+\tab\tab CASCADE;\par
+\par
+ALTER TABLE message\par
+\tab DROP\par
+\tab\tab PRIMARY KEY\par
+\tab\tab CASCADE\par
+\tab\tab KEEP INDEX;\par
+\par
+DROP INDEX PK_message;\par
+\par
+/* \'c2\'ca\'c1\'f6 */\par
+DROP TABLE message \par
+\tab CASCADE CONSTRAINTS;\par
+\par
+/* \'c2\'ca\'c1\'f6 */\par
+CREATE TABLE message (\par
+\tab m_num INTEGER NOT NULL, /* \'b1\'db\'b9\'f8\'c8\'a3 */\par
+\tab u_num INTEGER NOT NULL, /* \'c8\'b8\'bf\'f8\'b9\'f8\'c8\'a3 */\par
+\tab m_title VARCHAR2(50) NOT NULL, /* \'c1\'a6\'b8\'f1 */\par
+\tab m_content LONG NOT NULL, /* \'b3\'bb\'bf\'eb */\par
+\tab m_writedate DATE NOT NULL, /* \'c0\'db\'bc\'ba\'c0\'cf\'bd\'c3 */\par
+\tab m_to VARCHAR2(40) NOT NULL /* \'b9\'de\'b4\'c2\'bb\'e7\'b6\'f7 */\par
+);\par
+\par
+COMMENT ON TABLE message IS '\'c2\'ca\'c1\'f6';\par
+\par
+COMMENT ON COLUMN message.m_num IS '\'b1\'db\'b9\'f8\'c8\'a3';\par
+\par
+COMMENT ON COLUMN message.u_num IS '\'c8\'b8\'bf\'f8\'b9\'f8\'c8\'a3';\par
+\par
+COMMENT ON COLUMN message.m_title IS '\'c1\'a6\'b8\'f1';\par
+\par
+COMMENT ON COLUMN message.m_content IS '\'b3\'bb\'bf\'eb';\par
+\par
+COMMENT ON COLUMN message.m_writedate IS '\'c0\'db\'bc\'ba\'c0\'cf\'bd\'c3';\par
+\par
+COMMENT ON COLUMN message.m_to IS '\'b9\'de\'b4\'c2\'bb\'e7\'b6\'f7';\par
+\par
+CREATE UNIQUE INDEX PK_message\par
+\tab ON message (\par
+\tab\tab m_num ASC,\par
+\tab\tab u_num ASC\par
+\tab );\par
+\par
+ALTER TABLE message\par
+\tab ADD\par
+\tab\tab CONSTRAINT PK_message\par
+\tab\tab PRIMARY KEY (\par
+\tab\tab\tab m_num,\par
+\tab\tab\tab u_num\par
+\tab\tab );\par
+\par
+ALTER TABLE message\par
+\tab ADD\par
+\tab\tab CONSTRAINT FK_dateuser_TO_message\par
+\tab\tab FOREIGN KEY (\par
+\tab\tab\tab u_num\par
+\tab\tab )\par
+\tab\tab REFERENCES dateuser (\par
+\tab\tab\tab u_num\par
+\tab\tab );\par
+        \par
+        \par
+\par
+\par
+ALTER TABLE activity\par
+\tab DROP\par
+\tab\tab CONSTRAINT FK_dateuser_TO_activity\par
+\tab\tab CASCADE;\par
+\par
+ALTER TABLE activity\par
+\tab DROP\par
+\tab\tab PRIMARY KEY\par
+\tab\tab CASCADE\par
+\tab\tab KEEP INDEX;\par
+\par
+DROP INDEX PK_activity;\par
+\par
+/* \'bf\'a2\'c6\'bc\'ba\'f1\'c6\'bc */\par
+DROP TABLE activity \par
+\tab CASCADE CONSTRAINTS;\par
+\par
+/* \'bf\'a2\'c6\'bc\'ba\'f1\'c6\'bc */\par
+CREATE TABLE activity (\par
+\tab a_num INTEGER NOT NULL, /* \'b1\'db\'b9\'f8\'c8\'a3 */\par
+\tab u_num INTEGER NOT NULL, /* \'c8\'b8\'bf\'f8\'b9\'f8\'c8\'a3 */\par
+\tab a_title VARCHAR2(50) NOT NULL, /* \'c1\'a6\'b8\'f1 */\par
+\tab a_content LONG NOT NULL, /* \'b3\'bb\'bf\'eb */\par
+\tab a_writedate DATE NOT NULL, /* \'c0\'db\'bc\'ba\'c0\'cf\'bd\'c3 */\par
+\tab a_like INTEGER NOT NULL, /* \'c3\'df\'c3\'b5 */\par
+\tab a_path VARCHAR2(255), /* \'c6\'c4\'c0\'cf\'b0\'e6\'b7\'ce */\par
+\tab a_hits INTEGER /* \'c1\'b6\'c8\'b8\'bc\'f6 */\par
+);\par
+\par
+COMMENT ON TABLE activity IS '\'bf\'a2\'c6\'bc\'ba\'f1\'c6\'bc';\par
+\par
+COMMENT ON COLUMN activity.a_num IS '\'b1\'db\'b9\'f8\'c8\'a3';\par
+\par
+COMMENT ON COLUMN activity.u_num IS '\'c8\'b8\'bf\'f8\'b9\'f8\'c8\'a3';\par
+\par
+COMMENT ON COLUMN activity.a_title IS '\'c1\'a6\'b8\'f1';\par
+\par
+COMMENT ON COLUMN activity.a_content IS '\'b3\'bb\'bf\'eb';\par
+\par
+COMMENT ON COLUMN activity.a_writedate IS '\'c0\'db\'bc\'ba\'c0\'cf\'bd\'c3';\par
+\par
+COMMENT ON COLUMN activity.a_like IS '\'c3\'df\'c3\'b5';\par
+\par
+COMMENT ON COLUMN activity.a_path IS '\'c6\'c4\'c0\'cf\'b0\'e6\'b7\'ce';\par
+\par
+COMMENT ON COLUMN activity.a_hits IS '\'c1\'b6\'c8\'b8\'bc\'f6';\par
+\par
+CREATE UNIQUE INDEX PK_activity\par
+\tab ON activity (\par
+\tab\tab a_num ASC\par
+\tab );\par
+\par
+ALTER TABLE activity\par
+\tab ADD\par
+\tab\tab CONSTRAINT PK_activity\par
+\tab\tab PRIMARY KEY (\par
+\tab\tab\tab a_num\par
+\tab\tab );\par
+\par
+ALTER TABLE activity\par
+\tab ADD\par
+\tab\tab CONSTRAINT FK_dateuser_TO_activity\par
+\tab\tab FOREIGN KEY (\par
+\tab\tab\tab u_num\par
+\tab\tab )\par
+\tab\tab REFERENCES dateuser (\par
+\tab\tab\tab u_num\par
+\tab\tab );\par
+\par
+\par
+\par
+ALTER TABLE activitycomment\par
+\tab DROP\par
+\tab\tab CONSTRAINT FK_activity_TO_activitycomment\par
+\tab\tab CASCADE;\par
+\par
+ALTER TABLE activitycomment\par
+\tab DROP\par
+\tab\tab PRIMARY KEY\par
+\tab\tab CASCADE\par
+\tab\tab KEEP INDEX;\par
+\par
+DROP INDEX PK_activitycomment;\par
+\par
+/* \'b4\'f1\'b1\'db3 */\par
+DROP TABLE activitycomment \par
+\tab CASCADE CONSTRAINTS;\par
+\par
+/* \'b4\'f1\'b1\'db3 */\par
+CREATE TABLE activitycomment (\par
+\tab a_num INTEGER NOT NULL, /* \'b1\'db\'b9\'f8\'c8\'a3 */\par
+\tab a_comment VARCHAR2(500) NOT NULL /* \'b3\'bb\'bf\'eb */\par
+);\par
+\par
+COMMENT ON TABLE activitycomment IS '\'b4\'f1\'b1\'db3';\par
+\par
+COMMENT ON COLUMN activitycomment.a_num IS '\'b1\'db\'b9\'f8\'c8\'a3';\par
+\par
+COMMENT ON COLUMN activitycomment.a_comment IS '\'b3\'bb\'bf\'eb';\par
+\par
+CREATE UNIQUE INDEX PK_activitycomment\par
+\tab ON activitycomment (\par
+\tab\tab a_num ASC\par
+\tab );\par
+\par
+ALTER TABLE activitycomment\par
+\tab ADD\par
+\tab\tab CONSTRAINT PK_activitycomment\par
+\tab\tab PRIMARY KEY (\par
+\tab\tab\tab a_num\par
+\tab\tab );\par
+\par
+ALTER TABLE activitycomment\par
+\tab ADD\par
+\tab\tab CONSTRAINT FK_activity_TO_activitycomment\par
+\tab\tab FOREIGN KEY (\par
+\tab\tab\tab a_num\par
+\tab\tab )\par
+\tab\tab REFERENCES activity (\par
+\tab\tab\tab a_num\par
+\tab\tab );\par
+\par
+\par
+ALTER TABLE food\par
+\tab DROP\par
+\tab\tab CONSTRAINT FK_dateuser_TO_food\par
+\tab\tab CASCADE;\par
+\par
+ALTER TABLE food\par
+\tab DROP\par
+\tab\tab PRIMARY KEY\par
+\tab\tab CASCADE\par
+\tab\tab KEEP INDEX;\par
+\par
+DROP INDEX PK_food;\par
+\par
+/* \'b8\'c0\'c1\'fd */\par
+DROP TABLE food \par
+\tab CASCADE CONSTRAINTS;\par
+\par
+/* \'b8\'c0\'c1\'fd */\par
+CREATE TABLE food (\par
+\tab f_num INTEGER NOT NULL, /* \'b1\'db\'b9\'f8\'c8\'a3 */\par
+\tab u_num INTEGER NOT NULL, /* \'c8\'b8\'bf\'f8\'b9\'f8\'c8\'a3 */\par
+\tab f_title VARCHAR2(50) NOT NULL, /* \'c1\'a6\'b8\'f1 */\par
+\tab f_content LONG NOT NULL, /* \'b3\'bb\'bf\'eb */\par
+\tab f_writedate DATE NOT NULL, /* \'c0\'db\'bc\'ba\'c0\'cf\'bd\'c3 */\par
+\tab f_like INTEGER NOT NULL, /* \'c3\'df\'c3\'b5 */\par
+\tab f_path VARCHAR2(255), /* \'c6\'c4\'c0\'cf\'b0\'e6\'b7\'ce */\par
+\tab f_hits INTEGER /* \'c1\'b6\'c8\'b8\'bc\'f6 */\par
+);\par
+\par
+COMMENT ON TABLE food IS '\'b8\'c0\'c1\'fd';\par
+\par
+COMMENT ON COLUMN food.f_num IS '\'b1\'db\'b9\'f8\'c8\'a3';\par
+\par
+COMMENT ON COLUMN food.u_num IS '\'c8\'b8\'bf\'f8\'b9\'f8\'c8\'a3';\par
+\par
+COMMENT ON COLUMN food.f_title IS '\'c1\'a6\'b8\'f1';\par
+\par
+COMMENT ON COLUMN food.f_content IS '\'b3\'bb\'bf\'eb';\par
+\par
+COMMENT ON COLUMN food.f_writedate IS '\'c0\'db\'bc\'ba\'c0\'cf\'bd\'c3';\par
+\par
+COMMENT ON COLUMN food.f_like IS '\'c3\'df\'c3\'b5';\par
+\par
+COMMENT ON COLUMN food.f_path IS '\'c6\'c4\'c0\'cf\'b0\'e6\'b7\'ce';\par
+\par
+COMMENT ON COLUMN food.f_hits IS '\'c1\'b6\'c8\'b8\'bc\'f6';\par
+\par
+CREATE UNIQUE INDEX PK_food\par
+\tab ON food (\par
+\tab\tab f_num ASC\par
+\tab );\par
+\par
+ALTER TABLE food\par
+\tab ADD\par
+\tab\tab CONSTRAINT PK_food\par
+\tab\tab PRIMARY KEY (\par
+\tab\tab\tab f_num\par
+\tab\tab );\par
+\par
+ALTER TABLE food\par
+\tab ADD\par
+\tab\tab CONSTRAINT FK_dateuser_TO_food\par
+\tab\tab FOREIGN KEY (\par
+\tab\tab\tab u_num\par
+\tab\tab )\par
+\tab\tab REFERENCES dateuser (\par
+\tab\tab\tab u_num\par
+\tab\tab );\par
+        \par
+        \par
+        \par
+ALTER TABLE foodcomment\par
+\tab DROP\par
+\tab\tab CONSTRAINT FK_food_TO_foodcomment\par
+\tab\tab CASCADE;\par
+\par
+ALTER TABLE foodcomment\par
+\tab DROP\par
+\tab\tab PRIMARY KEY\par
+\tab\tab CASCADE\par
+\tab\tab KEEP INDEX;\par
+\par
+DROP INDEX PK_foodcomment;\par
+\par
+/* \'b4\'f1\'b1\'db */\par
+DROP TABLE foodcomment \par
+\tab CASCADE CONSTRAINTS;\par
+\par
+/* \'b4\'f1\'b1\'db */\par
+CREATE TABLE foodcomment (\par
+\tab f_num INTEGER NOT NULL, /* \'b1\'db\'b9\'f8\'c8\'a3 */\par
+\tab f_comment VARCHAR2(500) NOT NULL /* \'b3\'bb\'bf\'eb */\par
+);\par
+\par
+COMMENT ON TABLE foodcomment IS '\'b4\'f1\'b1\'db';\par
+\par
+COMMENT ON COLUMN foodcomment.f_num IS '\'b1\'db\'b9\'f8\'c8\'a3';\par
+\par
+COMMENT ON COLUMN foodcomment.f_comment IS '\'b3\'bb\'bf\'eb';\par
+\par
+CREATE UNIQUE INDEX PK_foodcomment\par
+\tab ON foodcomment (\par
+\tab\tab f_num ASC\par
+\tab );\par
+\par
+ALTER TABLE foodcomment\par
+\tab ADD\par
+\tab\tab CONSTRAINT PK_foodcomment\par
+\tab\tab PRIMARY KEY (\par
+\tab\tab\tab f_num\par
+\tab\tab );\par
+\par
+ALTER TABLE foodcomment\par
+\tab ADD\par
+\tab\tab CONSTRAINT FK_food_TO_foodcomment\par
+\tab\tab FOREIGN KEY (\par
+\tab\tab\tab f_num\par
+\tab\tab )\par
+\tab\tab REFERENCES food (\par
+\tab\tab\tab f_num\par
+\tab\tab );\par
+        \par
+        \par
+        \par
+ALTER TABLE movie\par
+\tab DROP\par
+\tab\tab CONSTRAINT FK_dateuser_TO_movie\par
+\tab\tab CASCADE;\par
+\par
+ALTER TABLE movie\par
+\tab DROP\par
+\tab\tab PRIMARY KEY\par
+\tab\tab CASCADE\par
+\tab\tab KEEP INDEX;\par
+\par
+DROP INDEX PK_movie;\par
+\par
+/* \'bf\'b5\'c8\'ad\'c3\'df\'c3\'b5 */\par
+DROP TABLE movie \par
+\tab CASCADE CONSTRAINTS;\par
+\par
+/* \'bf\'b5\'c8\'ad\'c3\'df\'c3\'b5 */\par
+CREATE TABLE movie (\par
+\tab m_num INTEGER NOT NULL, /* \'b1\'db\'b9\'f8\'c8\'a3 */\par
+\tab u_num INTEGER NOT NULL, /* \'c8\'b8\'bf\'f8\'b9\'f8\'c8\'a3 */\par
+\tab m_title VARCHAR2(50) NOT NULL, /* \'c1\'a6\'b8\'f1 */\par
+\tab m_content LONG NOT NULL, /* \'b3\'bb\'bf\'eb */\par
+\tab m_writedate DATE NOT NULL, /* \'c0\'db\'bc\'ba\'c0\'cf\'bd\'c3 */\par
+\tab m_like INTEGER NOT NULL, /* \'c3\'df\'c3\'b5 */\par
+\tab m_path VARCHAR2(255), /* \'c6\'c4\'c0\'cf\'b0\'e6\'b7\'ce */\par
+\tab m_hits INTEGER /* \'c1\'b6\'c8\'b8\'bc\'f6 */\par
+);\par
+\par
+COMMENT ON TABLE movie IS '\'bf\'b5\'c8\'ad\'c3\'df\'c3\'b5';\par
+\par
+COMMENT ON COLUMN movie.m_num IS '\'b1\'db\'b9\'f8\'c8\'a3';\par
+\par
+COMMENT ON COLUMN movie.u_num IS '\'c8\'b8\'bf\'f8\'b9\'f8\'c8\'a3';\par
+\par
+COMMENT ON COLUMN movie.m_title IS '\'c1\'a6\'b8\'f1';\par
+\par
+COMMENT ON COLUMN movie.m_content IS '\'b3\'bb\'bf\'eb';\par
+\par
+COMMENT ON COLUMN movie.m_writedate IS '\'c0\'db\'bc\'ba\'c0\'cf\'bd\'c3';\par
+\par
+COMMENT ON COLUMN movie.m_like IS '\'c3\'df\'c3\'b5';\par
+\par
+COMMENT ON COLUMN movie.m_path IS '\'c6\'c4\'c0\'cf\'b0\'e6\'b7\'ce';\par
+\par
+COMMENT ON COLUMN movie.m_hits IS '\'c1\'b6\'c8\'b8\'bc\'f6';\par
+\par
+CREATE UNIQUE INDEX PK_movie\par
+\tab ON movie (\par
+\tab\tab m_num ASC\par
+\tab );\par
+\par
+ALTER TABLE movie\par
+\tab ADD\par
+\tab\tab CONSTRAINT PK_movie\par
+\tab\tab PRIMARY KEY (\par
+\tab\tab\tab m_num\par
+\tab\tab );\par
+\par
+ALTER TABLE movie\par
+\tab ADD\par
+\tab\tab CONSTRAINT FK_dateuser_TO_movie\par
+\tab\tab FOREIGN KEY (\par
+\tab\tab\tab u_num\par
+\tab\tab )\par
+\tab\tab REFERENCES dateuser (\par
+\tab\tab\tab u_num\par
+\tab\tab );\par
+\par
+\par
+\par
+\par
+ALTER TABLE moviecomment\par
+\tab DROP\par
+\tab\tab CONSTRAINT FK_movie_TO_moviecomment\par
+\tab\tab CASCADE;\par
+\par
+ALTER TABLE moviecomment\par
+\tab DROP\par
+\tab\tab PRIMARY KEY\par
+\tab\tab CASCADE\par
+\tab\tab KEEP INDEX;\par
+\par
+DROP INDEX PK_moviecomment;\par
+\par
+/* \'b4\'f1\'b1\'db2 */\par
+DROP TABLE moviecomment \par
+\tab CASCADE CONSTRAINTS;\par
+\par
+/* \'b4\'f1\'b1\'db2 */\par
+CREATE TABLE moviecomment (\par
+\tab m_num INTEGER NOT NULL, /* \'b1\'db\'b9\'f8\'c8\'a3 */\par
+\tab m_comment VARCHAR2(500) NOT NULL /* \'b3\'bb\'bf\'eb */\par
+);\par
+\par
+COMMENT ON TABLE moviecomment IS '\'b4\'f1\'b1\'db2';\par
+\par
+COMMENT ON COLUMN moviecomment.m_num IS '\'b1\'db\'b9\'f8\'c8\'a3';\par
+\par
+COMMENT ON COLUMN moviecomment.m_comment IS '\'b3\'bb\'bf\'eb';\par
+\par
+CREATE UNIQUE INDEX PK_moviecomment\par
+\tab ON moviecomment (\par
+\tab\tab m_num ASC\par
+\tab );\par
+\par
+ALTER TABLE moviecomment\par
+\tab ADD\par
+\tab\tab CONSTRAINT PK_moviecomment\par
+\tab\tab PRIMARY KEY (\par
+\tab\tab\tab m_num\par
+\tab\tab );\par
+\par
+ALTER TABLE moviecomment\par
+\tab ADD\par
+\tab\tab CONSTRAINT FK_movie_TO_moviecomment\par
+\tab\tab FOREIGN KEY (\par
+\tab\tab\tab m_num\par
+\tab\tab )\par
+\tab\tab REFERENCES movie (\par
+\tab\tab\tab m_num\par
+\tab\tab );\par
+}
+ 
