@@ -17,16 +17,16 @@
 			<div id="content">
 				<div id="login_form_wrap">
 					<h1>LOGIN</h1>
-					<form>
+					<form action="user/loginPro.jsp" method="post">
 						<div>
-							ID<input class="input_t" type="text">
+							ID<input class="input_t" type="text" name="u_id" required>
 						</div>
 						<div>
-							PW<input class="input_t" type="password">
+							PW<input class="input_t" type="password" name="u_pw" required>
 						</div>
 						<div>
 							<input class="input_b" type="submit" value="로그인">
-							<input class="input_b" type="submit" value="회원가입">
+							<a href="user/insertForm.jsp" class="input_ba">회원가입</a>
 						</div>
 					</form>
 				</div>

@@ -27,6 +27,6 @@
             <%@include file="frame/footer.jsp" %>
         </div>
     </div>
-    </div>
+</div>
 </body>
 </html>

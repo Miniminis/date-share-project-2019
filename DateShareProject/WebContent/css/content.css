@@ -1,0 +1,186 @@
+@charset "UTF-8";
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+#m_show {
+	text-align: left;
+	border: solid 1px;
+	padding: 10px;
+}
+
+#m_show div {
+	font-weight: bold;
+	padding: 12px 0;
+	border-bottom: solid 1px;
+}
+
+#m_show div>span, p {
+	font-weight: normal;
+	padding: 5px;
+}
+
+#m_show div:nth-child(1) {
+	float: right;
+	text-align: right;
+	color: #807e7e;
+	font-size: 15px;
+	border: 0;
+	font-weight: normal;
+	padding: 0 5px 0 0;
+}
+
+#m_show div:nth-child(4) {
+	border: 0;
+}
+
+#m_show div:nth-child(4)>p {
+	margin: 10px 0 0 0;
+	border: solid 1px;
+	padding: 5px 10px 15px 10px;
+}
+
+.m_btn2 {
+	display: inline-block;
+	width: 48.6%;
+	border: solid 1px;
+	height: 40px;
+	line-height: 40px;
+	margin-top: 15px;
+
+}
+
+#m_show+a {
+	margin-right: 10px;
+}
+
+.m_btn2:hover {
+        color: #b95c7a;
+}
+
+
+#content {
+	text-align: center;
+	width: 700px;
+	margin: auto;
+	font-weight: normal;
+}
+
+#content_title {
+	padding: 50px;
+}
+
+#cform_wrap {
+	display: inline-block;
+	text-align: left;
+	padding: 30px;
+	width: 400px;
+}
+
+.c_input, .c_input_t, .c_btn, #c_btna {
+	background-color: transparent;
+	border: 0;
+	border-bottom: solid 1px;
+	width: 100%;
+	padding: 10px;
+}
+
+.c_input_t, .c_btn, #c_btna {
+	border: solid 1px;
+}
+
+.c_btn {
+	width: 105.5%;
+	margin: 10px 0 0 0;
+}
+
+.c_btn:hover, #c_btna:hover {
+	color: #b95c7a;
+}
+
+#c_btna {
+	display: inline-block;
+	font-size: 12px;
+	text-align: center;
+	margin: 5px 0 0 0;
+}
+
+#cform_wrap span {
+	display: inline-block;
+	padding: 10px 0;
+}
+
+#list_table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#list_table tr {
+	border-bottom: solid 1px;
+}
+
+#list_table tr:nth-child(1) {
+	font-weight: bold;
+}
+
+#list_table td:nth-child(2) {
+	text-align: left;
+	padding: 0 0 0 15px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	display: inline-block;
+	line-height: 50px;
+}
+
+#list_table tr:nth-child(1)>td:nth-child(2) {
+	text-align: center;
+}
+
+#list_table td {
+	padding: 10px;
+	text-align: center;
+}
+
+#list_table td a:hover {
+	color: #b1486a;
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+#list_table td:nth-child(2) {
+	width: 300px;
+}
+
+#list_wrap>a {
+	color: gray;
+	display: inline-block;
+	padding: 20px 0px;
+}
+
+#m {
+	text-align: right;
+	padding: 0 0 30px 0;
+}
+
+#m a:hover {
+	color: #de87a4;
+	font-weight: bold;
+}
+
+#send_m {
+	font-size: 18px;
+	display: block;
+	font-weight: bold;
+	padding: 10px 0 50px 0;
+}
+
+.m_btn {
+	display: inline-block;
+	width: 30%;
+	line-height: 40px;
+	border: solid 1px;
+	margin: 10px 5px 100px 0;
+}
