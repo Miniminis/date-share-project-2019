@@ -35,7 +35,7 @@
         </div>
         <div id="content">
         <h1>영화 글쓰기 페이지</h1>
-            <form action="movieWriteChk.jsp" method="post">
+            <form action="movieWriteChk.jsp" method="post" enctype="multipart/form-data">
             	<div id="container" class="center">
 	            	<div>
 	            		<h1><input type="text" id="mTitle" name="m_title" class="transparent mr-30" required placeholder="제목을 입력하세요"></h1>

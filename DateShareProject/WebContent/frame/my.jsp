@@ -1,11 +1,11 @@
+<%@page import="dateShare.Model.LoginInfo"%>
 <%@page import="dateShare.Model.DateUser"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
 	session = request.getSession();
 	
-	DateUser user = (DateUser) session.getAttribute("userInfo");
-
+	LoginInfo user = (LoginInfo) session.getAttribute("userInfo");
 %>
 <div id="my">
 	<span>

@@ -3,9 +3,9 @@
 	pageEncoding="UTF-8"%>
 <jsp:useBean id="message" class="dateShare.Model.Message" />
 <jsp:setProperty property="*" name="message" />
-<%
+<%	
 	WriteMessageService mService = WriteMessageService.getInstance();
-	int cnt = mService.write(message);
+	int cnt = mService.write(message, message.getU_num());
 %>
 <!DOCTYPE html>
 <html>

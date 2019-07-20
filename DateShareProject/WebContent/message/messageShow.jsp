@@ -7,11 +7,6 @@
 	
 	int m_num = Integer.parseInt(num);
 
-	
-	ShowMessageService mService = ShowMessageService.getInstance();
-	
-	Message m = mService.show(m_num);
-
 %>
 <!DOCTYPE html>
 <html>
@@ -39,9 +34,14 @@
 					<h2>MESSAGE SHOW</h2>
 				</div>
 				<div id="m_show">
+					<%
+						ShowMessageService mService = ShowMessageService.getInstance();
+					
+						Message m = mService.show(m_num);
+					%>
 					<div><%= m.getM_date() %></div>
 					<div>
-						보낸사람 <span><%= m.getU_num() %></span>
+						보낸사람 <span><%= m.getU_name() %>(<%= m.getU_id() %>)</span>
 					</div>
 					<div>
 						제목 <span><%= m.getM_title() %></span>

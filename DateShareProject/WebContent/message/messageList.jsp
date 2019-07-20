@@ -17,9 +17,6 @@
 
 	//핵심 처리할 서비스 객체
 	GetMessageListService get_service = GetMessageListService.getInstance();
-
-	//응답 데이터의 결과
-	MessageListView viewData = get_service.getMessageList(pageNumber);
 %>
 <!DOCTYPE html>
 <html>
@@ -43,7 +40,7 @@ function deleteM(id) {
             	m_num: id
             },
             success: function (data) {
-            	alert(data+"번의 메세지가 삭제되었습니다.");
+            	alert("메세지가 삭제되었습니다.");
             	location.reload();
             }
         });
@@ -80,6 +77,9 @@ function deleteM(id) {
 							<td></td>
 						</tr>
 						<%
+							//응답 데이터의 결과
+							MessageListView viewData = get_service.getMessageList(pageNumber, user.getU_id());
+						
 							if (viewData.isEmpty()) {
 						%>
 						<tr>
@@ -93,7 +93,7 @@ function deleteM(id) {
 						<tr>
 							<td><%=message.getM_num()%></td>
 							<td><a href="messageShow.jsp?m_num=<%= message.getM_num() %>"><%=message.getM_title()%></a></td>
-							<td><%=message.getU_num()%></td>
+							<td><%=message.getU_name()%></td>
 							<td><%=message.getM_writedate()%></td>
 							<td><a onclick="deleteM(<%= message.getM_num() %>)">삭제하기</a></td>
 						</tr>

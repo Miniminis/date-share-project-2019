@@ -1,3 +1,4 @@
+<%@page import="dateShare.service.movie.EditArticleService"%>
 <%@page import="dateShare.Model.Movie"%>
 <%@page import="java.io.File"%>
 <%@page import="java.util.Iterator"%>
@@ -9,9 +10,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%-- <jsp:useBean id="movietext" class="dateShare.Model.Movie" scope="request"/> --%>
-
-<% 
+<%
 	String mTitle = "";
 	String mPath = "";
 	int mStar = 0;
@@ -20,6 +19,9 @@
 	String uploadPath = "/images";
 	String dir = request.getSession().getServletContext().getRealPath(uploadPath);
 	String fileDBPath = "";
+	
+	//수정처리할 게시글 번호 
+	int aNum = 0;
 	
 	//1. enctype 확인 
 	boolean isMultipart = ServletFileUpload.isMultipartContent(request);
@@ -45,6 +47,8 @@
 					mStar = Integer.parseInt(file.getString("utf-8"));
 				} else if(file.getFieldName().equals("m_content")) {
 					mContent = file.getString("utf-8");
+				} else if(file.getFieldName().equals("articleNum")) {
+					aNum = Integer.parseInt(file.getString("utf-8"));
 				}
 			} else {
 				//(2) 파일형식인 경우 --> 파일 경로 분기처리 : 1. 파일이 있는 경우 2. 파일이 없는 경우
@@ -70,15 +74,9 @@
 	LoginInfo curuser = (LoginInfo) session.getAttribute("userInfo");
 	
 	Movie movietext = new Movie(curuser.getU_num(), mTitle, mContent, fileDBPath, mStar);
-	
-%>
 
-<%-- <jsp:setProperty property="*" name="movietext"/> --%>
-
-<%
-	
-	WriteMovieService service = WriteMovieService.getInstance();
-	int resultCnt = service.write(movietext);
+	EditArticleService service = EditArticleService.getInstance();
+	int resultCnt = service.editArticle(movietext, aNum);
 %>
 
 <!DOCTYPE html>
@@ -88,7 +86,21 @@
     <title>DATE SHARE | MOVIE</title>
 </head>
 <link href="../css/index.css" rel="stylesheet" type="text/css">
-<style></style>
+<style>
+
+	.center {
+		margin: 20 auto;
+		text-align: center;
+	}
+	.transparent {
+		border-color: transparent; 
+		background-color: transparent;
+	}
+	.mr-30 {
+		margin: 30px 0;
+	}
+
+</style>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 </head>
 <body>
@@ -102,7 +114,8 @@
             <%@ include file="../frame/nav.jsp" %>
         </div>
         <div id="content">
-            <h1><%= resultCnt>0? "게시물이 성공적으로 저장되었습니다" : "게시물이 저장에 실패하였습니다." %></h1>    
+            <%= resultCnt>0? "게시물이 성공적으로 수정되었습니다" : "게시물이 수정에 실패하였습니다." %></h1>
+            <h3><%= dir %></h3>
             <a href="movieMain.jsp"><input type="button" value="다른 콘텐츠 보기"></a> 
         </div>
         <div id="footer">

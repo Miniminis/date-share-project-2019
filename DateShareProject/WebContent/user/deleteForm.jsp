@@ -21,12 +21,26 @@
             <%@include file="../frame/nav.jsp" %>
         </div>
         <div id="content">
-        	<form action="deleteArticle.jsp" method="post">
-	        	<h3>삭제를 원하시면 비밀번호를 입력해주세요</h3>
-	        	<input type="hidden" name="artNum" value='<%=request.getParameter("articleNum")%>'>
-	        	비밀번호 확인 : <input type="password" name="confirmPw" required> <!-- 비밀번호 입력값 == null 을 방지하기 위해 -->
-	        	<input type="submit" value="삭제하기">
-        	</form>
+            
+            
+		<h3>회원탈퇴 페이지</h3>
+		<hr>
+		<form action="deleteMember.jsp" method="post">
+		<table>
+			<tr>
+			<td>아이디</td>
+			<td><input type="text" name="u_id"></td>   <!-- value값 넣기 -->
+			</tr>
+			<tr>
+				<td>비밀번호</td>
+				<td><input type="password" name="u_pw"></td>
+			</tr>
+		</table><br>
+		
+		<input type="submit" value="회원탈퇴">
+		<input type="button" value="취소" onclick="location.href='../main.jsp'">
+		</form>
+            
         </div>
         <div id="footer">
             <%@include file="../frame/footer.jsp" %>
@@ -35,3 +49,17 @@
     </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

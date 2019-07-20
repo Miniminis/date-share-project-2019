@@ -27,7 +27,7 @@
            </div>
            <div id="cform_wrap">
             <form action="writeMessage.jsp" method="post">
-                <span>보내는 사람 </span><br>
+                <span><label>보내는 사람</label> <%= user.getU_name() %>(<%= user.getU_id() %>) <input name="u_num" type="hidden" value="<%= user.getU_num() %>"> </span><br>
             	<span><label for="to">받는사람</label></span><input id="to" class="c_input" type="text" name="m_to"><br>
             	<span><label for="title">제목</label></span>
                 <input id="title" class="c_input" type="text" name="m_title"><br>
