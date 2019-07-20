@@ -13,5 +13,16 @@
   	<load-on-startup>1</load-on-startup>
   </servlet>
 
-
+  <filter>
+    <filter-name>loginChekFilter</filter-name>
+    <filter-class>filter.LoginCheckFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>loginChekFilter</filter-name>
+    <url-pattern>/user/*</url-pattern>
+    <url-pattern>/movie/*</url-pattern>
+    <url-pattern>/activity/*</url-pattern>
+    <url-pattern>/food/*</url-pattern>
+    <url-pattern>/message/*</url-pattern>
+  </filter-mapping>
 </web-app>
