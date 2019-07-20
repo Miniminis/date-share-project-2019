@@ -17,14 +17,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet Filter implementation class LoginCheckFilter
  */
-@WebFilter(urlPatterns={
-			"/user/*", 
-			"/movie/*",
-			"/activity/*",
-			"/food/*",
-			"/message/*",
-			"/main.jsp"
-		})
+/* @WebFilter("/movie/*") */
 //    /movie/* 뒤쪽으로 처리되는 모든 페이지에 대해서 이 Filter 통해서 로그인 체크 처리를 해준다. 
 public class LoginCheckFilter implements Filter {
 
