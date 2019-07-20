@@ -30,7 +30,7 @@
 			<div id="content">
 				<div id="login_form_wrap">
 					<h1>LOGIN</h1>
-					<form action="user/loginPro.jsp" method="post">
+					<form action="loginPro.jsp" method="post">
 						<div>
 							ID<input class="input_t" type="text" name="u_id" required>
 						</div>
