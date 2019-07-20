@@ -24,7 +24,7 @@ public class GetMessageListService {
 		//1. 한페이지에 보여줄 게시글의 개수
 		private static final int MESSAGE_COUNT_PER_PAGE = 8;
 		
-		public MessageListView getMessageList(int pageNumber) {
+		public MessageListView getMessageList(int pageNumber, String u_id) {
 			
 			//2. 현재 페이지 번호
 			int currentPageNumber = pageNumber;
@@ -41,7 +41,7 @@ public class GetMessageListService {
 				MessageDao dao = MessageDao.getInstance();
 				
 				//전체 게시물의 개수
-				int messageTotalCount = dao.selectCount(conn);
+				int messageTotalCount = dao.selectCount(conn, u_id);
 				
 				//게시물 내용 리스트, DB 검색에 사용할 start_row, end_row 구하기
 				List<Message> messageList = null;
@@ -53,7 +53,7 @@ public class GetMessageListService {
 					firstRow = (pageNumber-1)*MESSAGE_COUNT_PER_PAGE + 1;
 					endRow = firstRow + MESSAGE_COUNT_PER_PAGE -1;
 					
-					messageList = dao.selectList(conn, firstRow, endRow);
+					messageList = dao.selectList(conn, firstRow, endRow, u_id);
 				}else {
 					//0일때
 					currentPageNumber = 0;

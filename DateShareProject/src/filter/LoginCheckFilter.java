@@ -17,25 +17,24 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet Filter implementation class LoginCheckFilter
  */
+@WebFilter(urlPatterns={
+			"/user/*", 
+			"/movie/*",
+			"/activity/*",
+			"/food/*",
+			"/message/*",
+			"/main.jsp"
+		})
+//    /movie/* 뒤쪽으로 처리되는 모든 페이지에 대해서 이 Filter 통해서 로그인 체크 처리를 해준다. 
 public class LoginCheckFilter implements Filter {
 
-    /**
-     * Default constructor. 
-     */
     public LoginCheckFilter() {
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see Filter#destroy()
-	 */
+	
 	public void destroy() {
-		// TODO Auto-generated method stub
 	}
 
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		// place your code here
@@ -43,32 +42,24 @@ public class LoginCheckFilter implements Filter {
 		//조건을 주고 처리하는 부분
 		
 		HttpServletRequest req = (HttpServletRequest)request;
+		HttpSession session = req.getSession(false); //기존에 있던 session 을 가져옴 
 		HttpServletResponse resp = (HttpServletResponse)response;
-		
-		//session
-		//세션을 만들건지 기존에 있는 것을 사용할것인지 false는 기존에 있는것을 사용
-		HttpSession session = req.getSession();
-		
+	
 		boolean loginChk = false;
 
-		if(session.getAttribute("userInfo") != null) {
-			
+		if(session != null && session.getAttribute("userInfo") != null) {
 			loginChk = true;
 		}
 		
 		if(loginChk) {
+			// pass the request along the filter chain
 			chain.doFilter(request, response);
-			resp.sendRedirect("main.jsp");
-		}else {
-			//RequestDispatcher dispatcher = request.getRequestDispatcher("/0626/session/member/loginForm.jsp");
-			//실행
-			//dispatcher.forward(request, response);
 			
-			resp.sendRedirect(req.getContextPath());
+		}else {
+			//RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+			//dispatcher.forward(request, response);
+			resp.sendRedirect(req.getContextPath()+"/index.jsp");
 		}
-		
-		// pass the request along the filter chain
-		chain.doFilter(request, response);
 	}
 
 	/**

@@ -17,7 +17,7 @@ public class WriteMessageService {
 	
 	private WriteMessageService() {}
 	
-	public int  write(Message message) {
+	public int  write(Message message, int u_num) {
 		int rCnt = 0;
 		
 		Connection conn = null;
@@ -27,7 +27,7 @@ public class WriteMessageService {
 			
 			MessageDao mDao = MessageDao.getInstance();
 			
-			rCnt = mDao.insert(conn, message);
+			rCnt = mDao.insert(conn, message, u_num);
 			
 		} catch(SQLException e) {
 			e.printStackTrace();

@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class DateUser {
 
-
 	// 각 변수의 저근 제어지시자는 private 
 	private int u_num;
 	private String u_id;
@@ -70,6 +69,13 @@ public class DateUser {
 
 	public void setU_gender(String u_gender) {
 		this.u_gender = u_gender;
+	}
+	
+	
+	public LoginInfo toLoginInfo() {
+		
+		//인스턴스 생성 후 반환
+		return new LoginInfo(u_num ,u_id, u_pw, u_name);
 	}
 	
 }

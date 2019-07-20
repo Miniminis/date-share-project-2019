@@ -12,7 +12,6 @@ import dateShare.Model.Message;
 import jdbc.JdbcUtil;
 
 public class MessageDao {
-
 	// 인스턴스 생성
 	private static MessageDao mDao = new MessageDao();
 
@@ -24,18 +23,19 @@ public class MessageDao {
 	private MessageDao() {
 	}
 
-	public int insert(Connection conn, Message message) {
+	public int insert(Connection conn, Message message, int u_num) {
 
 		int rCnt = 0;
 		PreparedStatement pstmt = null;
 
-		String sql = "insert into message (m_num, m_title, m_content, m_to) values(message_seq.nextval,?,?,?)";
+		String sql = "insert into message values(message_seq.nextval,?,?,?,sysdate,?)";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, message.getM_title());
-			pstmt.setString(2, message.getM_content());
-			pstmt.setString(3, message.getM_to());
+			pstmt.setInt(1, u_num);
+			pstmt.setString(2, message.getM_title());
+			pstmt.setString(3, message.getM_content());
+			pstmt.setString(4, message.getM_to());
 
 			return pstmt.executeUpdate();
 
@@ -92,7 +92,8 @@ public class MessageDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		String sql = "select m_num, u_num,m_title,m_content, to_char(message.m_writedate, 'MM-DD HH24:MI'), m_to from message where m_num = ?";
+		String sql = "select m_num, d.u_name, d.u_id, m.m_title, m.m_content, to_char(m.m_writedate, 'MM-DD HH24:MI'), m.m_to "
+				+ "from message m join dateuser d using(u_num) where m_num = ?";
 
 		try {
 
@@ -104,11 +105,12 @@ public class MessageDao {
 			if (rs.next()) {
 				message = new Message();
 				message.setM_num(rs.getInt(1));
-				message.setU_num(rs.getInt(2));
-				message.setM_title(rs.getString(3));
-				message.setM_content(rs.getString(4));
-				message.setM_date(rs.getString(5));
-				message.setM_to(rs.getString(6));
+				message.setU_name(rs.getString(2));
+				message.setU_id(rs.getString(3));
+				message.setM_title(rs.getString(4));
+				message.setM_content(rs.getString(5));
+				message.setM_date(rs.getString(6));
+				message.setM_to(rs.getString(7));
 			}
 
 		} catch (SQLException e) {
@@ -121,23 +123,28 @@ public class MessageDao {
 	
 	
 
-	public int selectCount(Connection conn) {
-		Statement stmt = null;
-		ResultSet rs = null;
+	public int selectCount(Connection conn, String u_id) {
 
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		
 		// 결과가져오는 변수
 		int totalCnt = 0;
 
-		String sql = "select count(*) from message";
+		String sql = "select count(*) from message m join dateuser d using(u_num) where m.m_to = ?";
 
 		try {
-			stmt = conn.createStatement();
-
-			rs = stmt.executeQuery(sql);
-
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, u_id);
+			
+			rs = pstmt.executeQuery();
+			
 			if (rs.next()) {
 				totalCnt = rs.getInt(1);
+				
 			}
+			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -148,28 +155,24 @@ public class MessageDao {
 	}
 
 	
-	public List<Message> selectList(Connection conn, int firstRow, int endRow) {
+	public List<Message> selectList(Connection conn, int firstRow, int endRow, String u_id) {
 
 		List<Message> list = new ArrayList<Message>();
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		//String sql = "select m_num,d.u_name, m_title, m_content, m_writedate,m_to"
-		//		+ "from ( select rownum rnum, m_num, u_num, m_title, m_content,m_writedate,m_to"
-		//		+ " from ( select * from message m order by m.m_num desc) where rownum <= ? ) join dateuser d"
-		//		+ "using(u_num) where rnum >= ?";
-		
-		String sql = "select m_num,u_num, m_title, m_content, m_writedate,m_to from ("
-					+ " select rownum rnum, m_num, u_num, m_title, m_content,m_writedate,m_to from ("
-					+ " select * from message m order by m.m_num desc"
-					+ ") where rownum <=?"
-					+ ") where rnum >= ?";
+		String sql = "select m_num, d.u_name, d.u_id, m_title, m_writedate from("
+				+ "select rownum rnum, m_num, u_num, m_title, m_content,m_writedate,m_to from ("
+				+ "select * from message m order by m.m_num desc) where rownum <= ? "
+				+ ")join dateuser d using(u_num) where rnum >= ? and m_num in("
+				+ "select m.m_num from message m, dateuser d where m.u_num = d.u_num and m.m_to = ?) order by m_writedate desc";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, endRow);
 			pstmt.setInt(2, firstRow);
+			pstmt.setString(3, u_id);
 			 
 
 			rs = pstmt.executeQuery();
@@ -177,11 +180,10 @@ public class MessageDao {
 			while (rs.next()) {
 				Message msg = new Message();
 				msg.setM_num(rs.getInt(1));
-				msg.setU_num(rs.getInt(2));
-				msg.setM_title(rs.getString(3));
-				msg.setM_content(rs.getString(4));
+				msg.setU_name(rs.getString(2));
+				msg.setU_id(rs.getString(3));
+				msg.setM_title(rs.getString(4));
 				msg.setM_writedate(rs.getDate(5));
-				msg.setM_to(rs.getString(6));
 
 				list.add(msg);
 			}

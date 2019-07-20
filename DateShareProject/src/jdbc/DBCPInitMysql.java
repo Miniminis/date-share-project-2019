@@ -13,7 +13,7 @@ import org.apache.commons.dbcp2.PoolingDriver;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
-public class DBCPInit extends HttpServlet {
+public class DBCPInitMysql extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
@@ -23,9 +23,8 @@ public class DBCPInit extends HttpServlet {
 
 	private void loadJDBCDriver() {
 		try {
-			
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			System.out.println("Oracle Driver is loaded successfully");
+			Class.forName("com.mysql.jdbc.Driver");
+			System.out.println("MYSQL Driver is loaded successfully");
 		} catch (ClassNotFoundException ex) {
 			throw new RuntimeException("fail to load JDBC Driver", ex);
 		}
@@ -35,10 +34,9 @@ public class DBCPInit extends HttpServlet {
 		
 		try {
 
-			String jdbcDriver = "jdbc:oracle:thin:@localhost:1521:orcl"; 
-			String username = "scott";
-			String pw = "tiger";
-			
+			String jdbcDriver = "jdbc:mysql://localhost:3306/testdb"; 
+			String username = "bit";
+			String pw = "bit";
 			ConnectionFactory connFactory = new DriverManagerConnectionFactory(jdbcDriver, username, pw);
 			
 			PoolableConnectionFactory poolableConnFactory = new PoolableConnectionFactory(connFactory, null);

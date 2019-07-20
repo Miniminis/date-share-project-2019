@@ -6,6 +6,8 @@ public class Message {
 	
 	private int m_num; 		  //메세지 번호
 	private int u_num; 		  //보낸사람 회원번호
+	private String u_name;	  //보낸사람이름
+	private String u_id;	  //보낸사람아이디
 	private String m_to; 	  //받는사람
 	private String m_title;   //쪽지제목
 	private String m_content; //쪽지내용
@@ -54,6 +56,18 @@ public class Message {
 	}
 	public void setM_date(String m_date) {
 		this.m_date = m_date;
+	}
+	public String getU_name() {
+		return u_name;
+	}
+	public void setU_name(String u_name) {
+		this.u_name = u_name;
+	}
+	public String getU_id() {
+		return u_id;
+	}
+	public void setU_id(String u_id) {
+		this.u_id = u_id;
 	}
 	
 	

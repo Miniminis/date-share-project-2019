@@ -7,19 +7,20 @@ import dateShare.Dao.DateUserDao;
 import dateShare.Model.DateUser;
 import jdbc.ConnectionProvider;
 
-public class InsertMemberService {
+public class IdCheckService {
 	
-	private static InsertMemberService service = new InsertMemberService();
+	private static IdCheckService service = new IdCheckService();
 
-	public static InsertMemberService getInstance() {
+	public static IdCheckService getInstance() {
 		return service;
 	}
 
-	private InsertMemberService() {}
+	private IdCheckService() {}
 
-	public void insert(DateUser dUser) {
-
-
+	public int idCheck(String u_id) {
+		
+		int check = 0;
+		
 		Connection conn = null;
 
 		try {
@@ -28,13 +29,14 @@ public class InsertMemberService {
 
 			DateUserDao dao = DateUserDao.getInstance();
 
-			dao.insert(conn, dUser);
+			check = dao.idCheck(conn, u_id);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+		return check;
 
 	}
 }
