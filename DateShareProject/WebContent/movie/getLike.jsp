@@ -8,7 +8,7 @@
 	int mNum = 0;
 	int uNum = 0;
 
-	//1. movieContentView.jsp 에서 m_num, u_num 넘겨받음 
+	//1. movieContentView.jsp 에서 m_num, u_num(현재 로그인한 사용자의 정보) 넘겨받음 
 	String mNumStr = request.getParameter("m_num");
 	String uNumStr = request.getParameter("u_num");
 	

@@ -22,6 +22,10 @@
 	GetLikeService likeservice = GetLikeService.getInstance();
 	likeOriginCnt = likeservice.getLikeOrigin(articleNum); 
 	
+	//세션에서 회원정보 받아오기
+	session = request.getSession(false);
+	LoginInfo curuser = (LoginInfo) session.getAttribute("userInfo");
+	
 %>
 
 <!DOCTYPE html>
@@ -30,26 +34,25 @@
 <meta charset="UTF-8">
     <title>DATE SHARE</title>
 </head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link href="../css/index.css" rel="stylesheet" type="text/css">
+<link href="../css/movie.css" rel="stylesheet" type="text/css">
+
 <style>
-	#container {
-		margin: 20px auto;
-	}
+	
 	#emptyLike {
 		cursor: pointer;
 	}
-	.transparent {
-		border-color: transparent; 
-		background-color: transparent;
-		display: inline;
-	}
+
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://kit.fontawesome.com/744ccfa256.js"></script>
 <script>
 	
+	//게시글 삭제하기
 	function deleteArticle(artnum) {
-		if(confirm('정말로 삭제하시겠습니까? ')){
+		
+		if(confirm('삭제된 글을 다시 복구가 불가합니다. 정말로 삭제하시겠습니까?')){
 			$.ajax ({
 				url: 'deleteArticle.jsp',
 				type: 'get',
@@ -57,7 +60,7 @@
 					m_num : artnum
 				},
 				success: function(data){
-					alert(data+"번의 메세지가 삭제되었습니다.");
+					alert(data);
 					location.href="movieMain.jsp";
 				}
 			});
@@ -65,9 +68,33 @@
 	}
 	
 	
-	//$('#emptyLike').hide();
-	//$('#fullLike').show();
+	//게시글 수정권한확인 --> 결과에 따라 분기처리
+	function editArticle(artnum) {
+		if(confirm('게시글을 수정하시겠습니까? ')) {
+			$.ajax({
+				url: 'editAuthorityChk.jsp',
+				type: 'get',
+				data : {
+					m_num : artnum
+				},
+				success : function(data){
+					if(data == 0) {
+						alert('작성자 본인만 수정 가능합니다!');
+					} else if(data == 1) {
+						alert('수정페이지로 이동합니다.');
+						window.location.href = "movieEditView.jsp?articleNum=" + artnum;
+						//location.href="movieEditView.jsp";
+					} 
+				}
+			});
+		}
+		
+	}
 	
+	
+	
+	
+	//게시글 좋아요
 	$(document).ready(function(){
 		//alert($("#m_num").val());
 		//$('#fullLike').hide();
@@ -111,27 +138,40 @@
             	<input id="m_num" type="hidden" value="<%= movieContent.getM_num() %>">
             	<input id="u_num" type="hidden" value="<%= user.getU_num() %>">
             	
-            	<image src="<%= movieContent.getM_path() %>" width="100%" height="225">
-            	
-            	<h1>제목 <%= movieContent.getM_title() %></h1>
-            	<h3>작성자 <%= movieContent.getU_name() %> <br>
-            		작성일시<%= movieContent.getM_writedate() %> <br> 
-            		좋아요 <a id="emptyLike"><i class="far fa-heart"></i></a>
-            			<a id="fullLike"><i class="fas fa-heart"></i></a>
-            		<input type="text" id="likeCnt" value="<%= likeOriginCnt %>" class="transparent">
-            		<br>
-            		조회수<%= movieContent.getM_hits() %></h3>
-            	<p>내용 <%= movieContent.getM_content() %></p>
-           
-            	<input type="button" value="삭제하기" id="deleteBtn" onclick="deleteArticle(<%= movieContent.getM_num() %>)">
-            	<br>
-            	
-            	<a href="movieMain.jsp">
-            		<input type="button" value="목록보기">
-            	</a>
-            	
-            	<p>댓글</p>
-            </div>
+            	<div class="row justify-content-md-center">
+            	<div class="col-md-8 border-gray">
+	            	<h2 class="center"><%= movieContent.getM_title() %></h2>
+	            	<div class="noOverflow">	            	
+		            	<p class="align-left">
+		            		<strong>작성자   </strong><%= movieContent.getU_name() %><br>
+		            		<strong>작성일시   </strong><%= movieContent.getM_writedate() %>
+		            	</p>
+		            	<p class="align-right">
+		            		<br>
+		            		<strong>조회수   </strong><%= movieContent.getM_hits() %>
+		            	</p>
+	            	</div>	
+	            	<hr>
+	            	<image src="<%= movieContent.getM_path() %>" width="100%" height="400" class="pd-10">
+	            	<p class="pd-10"><%= movieContent.getM_content() %></p>
+	            	<hr>                      	
+	            	<div class="btn-group">
+	            		<strong>좋아요</strong><a id="emptyLike"><i class="far fa-heart"></i></a>
+	           					<a id="fullLike"><i class="fas fa-heart"></i></a>
+	           					<input id="likeCnt" value="<%= likeOriginCnt %>" class="transparent" disabled>
+		                <a id="deleteBtn" onclick="deleteArticle(<%= movieContent.getM_num() %>)">
+		                	<button type="button" class="btn btn-sm btn-outline-secondary">DELETE</button>
+		                </a>
+		                <a id="editBtn" onclick="editArticle(<%= movieContent.getM_num() %>)">
+		                	<button type="button" class="btn btn-sm btn-outline-secondary">EDIT</button>
+		                </a>
+	                </div><br>
+	                <a href="movieMain.jsp">
+	           			<button type="button" class="btn btn-md btn-outline-secondary btn-block">MAIN</button>
+	           	    </a>
+            	</div>
+            	</div>
+        	</div>
         </div>
         <div id="footer">
             <%@include file="../frame/footer.jsp" %>

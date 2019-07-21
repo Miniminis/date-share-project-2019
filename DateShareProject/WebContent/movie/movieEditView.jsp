@@ -3,8 +3,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	String artnum = request.getParameter("articleNum");
-		
+	String artnum = request.getParameter("articleNum"); 
+	
+	//out.println(artnum);
+
 	int articleNum = 1; 
 		
 	if(artnum != null) {
@@ -38,7 +40,7 @@
         <div id="nav">
             <%@include file="../frame/nav.jsp" %>
         </div>
-        <div id="content">
+       <div id="content">
         <h1>영화 글 수정 페이지</h1>
             <form action="movieEditChk.jsp" method="post" enctype="multipart/form-data">
             	<div id="container" class="center">
@@ -52,7 +54,9 @@
 	            		<input type="number" id="mStar" name="m_star" value="<%= movieContent.getM_star() %>">
 	            	</div>
 	            	<div class="mr-30">
-	            		<textarea name="m_content" class="transparent" rows="50" cols="100" value="<%= movieContent.getM_content() %>"></textarea>
+	            		<textarea name="m_content" class="transparent" rows="50" cols="100">
+	            			<%= movieContent.getM_content() %>
+	            		</textarea>
 	            	</div>
 	            	<input type="hidden" name="articleNum" value="<%= movieContent.getM_num() %>">
 	            	<input type="submit" value="글 수정하기">

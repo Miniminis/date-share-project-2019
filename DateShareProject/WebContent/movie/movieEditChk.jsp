@@ -1,3 +1,4 @@
+<%@page import="dateShare.Model.LoginInfo"%>
 <%@page import="dateShare.service.movie.EditArticleService"%>
 <%@page import="dateShare.Model.Movie"%>
 <%@page import="java.io.File"%>
@@ -69,7 +70,7 @@
 		
 	}
 	
-	//세션에서 회원정보 받아오기
+	//세션에서 회원정보 받아오기  
 	session = request.getSession(false);
 	LoginInfo curuser = (LoginInfo) session.getAttribute("userInfo");
 	
@@ -77,8 +78,8 @@
 
 	EditArticleService service = EditArticleService.getInstance();
 	int resultCnt = service.editArticle(movietext, aNum);
+	
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,21 +87,7 @@
     <title>DATE SHARE | MOVIE</title>
 </head>
 <link href="../css/index.css" rel="stylesheet" type="text/css">
-<style>
-
-	.center {
-		margin: 20 auto;
-		text-align: center;
-	}
-	.transparent {
-		border-color: transparent; 
-		background-color: transparent;
-	}
-	.mr-30 {
-		margin: 30px 0;
-	}
-
-</style>
+<style></style>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 </head>
 <body>
@@ -114,8 +101,7 @@
             <%@ include file="../frame/nav.jsp" %>
         </div>
         <div id="content">
-            <%= resultCnt>0? "게시물이 성공적으로 수정되었습니다" : "게시물이 수정에 실패하였습니다." %></h1>
-            <h3><%= dir %></h3>
+            <h1><%= resultCnt>0? "게시물이 성공적으로 수정되었습니다" : "게시물이 수정에 실패하였습니다." %></h1>    
             <a href="movieMain.jsp"><input type="button" value="다른 콘텐츠 보기"></a> 
         </div>
         <div id="footer">
