@@ -65,6 +65,7 @@ a {
 	text-align: center;
 	width: 700px;
 	margin: auto;
+	font-weight: normal;
 }
 
 #content_title {
@@ -182,10 +183,4 @@ a {
 	line-height: 40px;
 	border: solid 1px;
 	margin: 10px 5px 100px 0;
-}
-
-
-#cform_wrap label{
-	
-	font-weight: bold;
 }

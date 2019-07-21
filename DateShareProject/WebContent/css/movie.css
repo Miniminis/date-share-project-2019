@@ -1,0 +1,65 @@
+/* 공통/기본 설정  */
+body {
+	background-color: transparent;
+}
+
+a {
+	color: #333; 
+	text-decoration: none; 
+	outline: none;
+}
+
+a:hover, a:active {
+	text-decoration: none; 
+	color:#333; 
+}
+
+#container {
+	margin: 40px auto;
+}
+
+.transparent {
+	border-color: transparent; 
+	background-color: transparent;
+	display: inline;
+}
+
+.center {
+	margin: 0 auto;
+	text-align: center;
+}
+
+
+/* movieMain */
+.shadow-sm:hover,
+.shadow-sm:active {
+	background:#333;
+	color: #fff;
+}
+
+/* movieContentView */
+.border-gray {
+	border: 1px solid #333;
+	border-radius: 5px;
+	padding: 20px;
+}
+
+.noOverflow {
+	overflow: hidden;
+}
+
+.align-left {
+	text-align: left;
+	float: left;
+}
+.align-right {
+	text-align: right;
+	float: right;
+}
+
+.pd-10 {
+	padding: 10px;
+}
+
+
+
