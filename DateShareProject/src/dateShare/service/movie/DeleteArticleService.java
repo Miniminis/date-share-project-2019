@@ -40,10 +40,13 @@ public class DeleteArticleService {
 			
 			if(movie == null) {
 				throw new ArticleNotFoundException(artnum + "번 게시물이 존재하지 않습니다!");
-			} 
-			
-			//4. 이 모든 상황이 아니면 --> 게시글 삭제
-			resultCnt = dao.delete(conn, artnum, uNum);
+			} else if(movie.getU_num() != uNum) {
+				//글을 쓴 유저의 넘버와 현재 로그인한 사용자의 유저넘버가 같지 않다면 
+				resultCnt = 0;
+			} else {
+				//4. 이 모든 상황이 아니면 --> 게시글 삭제
+				resultCnt = dao.delete(conn, artnum, uNum);
+			}
 			
 			//트랜젝션 종료 
 			conn.commit();
