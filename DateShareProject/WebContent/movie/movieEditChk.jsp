@@ -86,9 +86,14 @@
 <meta charset="UTF-8">
     <title>DATE SHARE | MOVIE</title>
 </head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link href="../css/movie.css" rel="stylesheet" type="text/css">
 <link href="../css/index.css" rel="stylesheet" type="text/css">
 <style></style>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<script></script>
+
 </head>
 <body>
 <div id="wrap">
@@ -101,8 +106,18 @@
             <%@ include file="../frame/nav.jsp" %>
         </div>
         <div id="content">
-            <h1><%= resultCnt>0? "게시물이 성공적으로 수정되었습니다" : "게시물이 수정에 실패하였습니다." %></h1>    
-            <a href="movieMain.jsp"><input type="button" value="다른 콘텐츠 보기"></a> 
+        	<div class="mr-250">       	
+	            <h4 class="center">
+	            <% 
+	            if(resultCnt>0) {
+	            	out.println("<script>alert('게시물이 성공적으로 수정되었습니다.'); location.replace('movieMain.jsp');</script>" );
+	            } else {
+	            	out.println("<script>alert('게시물 수정에 실패하였습니다.'); location.replace('movieMain.jsp');</script>");
+	            }
+	            %>
+	            </h4>    
+	           <!--  <a href="movieMain.jsp" class="btn btn-md btn-outline-secondary btn-center">다른 콘텐츠 보기</a>  -->
+            </div>
         </div>
         <div id="footer">
             <%@ include file="../frame/footer.jsp" %>

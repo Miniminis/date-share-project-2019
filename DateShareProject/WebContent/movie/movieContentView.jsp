@@ -40,10 +40,17 @@
 
 <style>
 	
-	#emptyLike {
+	/* #emptyLike {
+		cursor: pointer;
+	} */
+	
+	#fullLike {
 		cursor: pointer;
 	}
-
+	
+	
+	
+	
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://kit.fontawesome.com/744ccfa256.js"></script>
@@ -99,7 +106,7 @@
 		//alert($("#m_num").val());
 		//$('#fullLike').hide();
 		
-		$('#emptyLike').click(function(){
+		$('#fullLike').click(function(){
 			//alert('좋아요');
 			
 			$.ajax({
@@ -135,9 +142,6 @@
         </div>
         <div id="content">
             <div id="container">
-            	<input id="m_num" type="hidden" value="<%= movieContent.getM_num() %>">
-            	<input id="u_num" type="hidden" value="<%= user.getU_num() %>">
-            	
             	<div class="row justify-content-md-center">
             	<div class="col-md-8 border-gray">
 	            	<h2 class="center"><%= movieContent.getM_title() %></h2>
@@ -147,29 +151,37 @@
 		            		<strong>작성일시   </strong><%= movieContent.getM_writedate() %>
 		            	</p>
 		            	<p class="align-right">
-		            		<br>
+		            		<strong>사용자평점  <i class="fas fa-star"></i></strong><%= movieContent.getM_star() %><br>
 		            		<strong>조회수   </strong><%= movieContent.getM_hits() %>
 		            	</p>
 	            	</div>	
 	            	<hr>
-	            	<image src="<%= movieContent.getM_path() %>" width="100%" height="400" class="pd-10">
+	            	<image src="<%= movieContent.getM_path() %>" width="100%" height="400px" class="pd-10">
 	            	<p class="pd-10"><%= movieContent.getM_content() %></p>
-	            	<hr>                      	
-	            	<div class="btn-group">
-	            		<strong>좋아요</strong><a id="emptyLike"><i class="far fa-heart"></i></a>
-	           					<a id="fullLike"><i class="fas fa-heart"></i></a>
-	           					<input id="likeCnt" value="<%= likeOriginCnt %>" class="transparent" disabled>
-		                <a id="deleteBtn" onclick="deleteArticle(<%= movieContent.getM_num() %>)">
-		                	<button type="button" class="btn btn-sm btn-outline-secondary">DELETE</button>
-		                </a>
-		                <a id="editBtn" onclick="editArticle(<%= movieContent.getM_num() %>)">
-		                	<button type="button" class="btn btn-sm btn-outline-secondary">EDIT</button>
-		                </a>
-	                </div><br>
-	                <a href="movieMain.jsp">
+	            	<hr>
+                      	
+	            	<div>
+	            		<div id="like" class="align-left">
+	            			<strong>좋아요</strong>
+        					<a id="fullLike"><i class="fas fa-heart"></i></a>
+        					<!-- <a id="emptyLike"><i class="far fa-heart"></i></a> -->
+        					<input id="likeCnt" value="<%= likeOriginCnt %>" class="transparent" disabled>
+        						<input id="m_num" type="hidden" value="<%= movieContent.getM_num() %>">
+           						<input id="u_num" type="hidden" value="<%= user.getU_num() %>">	
+		                </div>
+		                <div class="align-right">
+			                <a id="deleteBtn" onclick="deleteArticle(<%= movieContent.getM_num() %>)" >
+			                	<button type="button" class="btn btn-md btn-outline-secondary ">DELETE</button>
+			                </a>		                
+			                <a id="editBtn" onclick="editArticle(<%= movieContent.getM_num() %>)">
+			                	<button type="button" class="btn btn-md btn-outline-secondary " >EDIT</button>
+			                </a>
+		                </div>
+		            </div>	                
+	                <br>
+	                <a href="movieMain.jsp" class="mr-5-2">
 	           			<button type="button" class="btn btn-md btn-outline-secondary btn-block">MAIN</button>
 	           	    </a>
-            	</div>
             	</div>
         	</div>
         </div>

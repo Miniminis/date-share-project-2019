@@ -46,13 +46,16 @@
         <div id="nav">
             <%@ include file="../frame/nav.jsp" %>
         </div>
+		
         <div id="content" class ="album py-5">
-            <div id="contentList" class="container">   
+        
+            <div id="contentList" class="container">  
             	<div class="row">   
             	<%
             		if(movieList.isEmpty()) {
-            			out.println("등록된 게시글이 없습니다.");
-            			
+            			%>
+            			<h4 class="center">등록된 게시글이 없습니다.</h4>
+            			<%           			
             		} else {
             			for(Movie movie : movieList) {            			
             			%>                				
@@ -73,10 +76,6 @@
 	            				 <div class="d-flex justify-content-between align-items-center">
 	            				 	<div>
 	            				 		<i class="fas fa-star"></i>
-	            				 		<i class="fas fa-star"></i>
-	            				 		<i class="fas fa-star"></i>
-	            				 		<i class="fas fa-star"></i>
-	            				 		<i class="fas fa-star"></i>
 	            				 		<%= movie.getM_star() %>
 	            				 	</div> 	
 					                <small class="text-muted"><%= movie.getM_writedate() %></small>
@@ -91,9 +90,10 @@
             		}
             	%>
             	</div>
-            </div>
-
-            <a href="movieWrite.jsp"><input type="button" value="콘텐츠 등록하기"></a> 
+            	
+            	<a href="movieWrite.jsp" class="btn btn-md btn-outline-secondary btn-center">새 콘텐츠 등록하기</a> 
+            	
+            </div>         
         </div>
         <div id="footer">
             <%@ include file="../frame/footer.jsp" %>
