@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dateShare.Model.Activity;
+import dateShare.Model.Movie;
 import jdbc.JdbcUtil;
 
 /*
@@ -23,7 +24,7 @@ public class ActivityDao {
 		return dao;
 	}
 
-	private ActivityDao() {
+	private ActivityDao() {	
 	}
 
 	// 게시글 insert
@@ -84,7 +85,7 @@ public class ActivityDao {
 		return rCnt;
 	}
 
-	// 게시글 1개 select - 상세보기와 delete  ----> 상세보기 따로 delete 따로로 바꾸고 싶다..
+	// 게시글 1개 select
 	public Activity select(Connection conn, int a_num) {
 		Activity activity = null;
 
@@ -150,17 +151,10 @@ public class ActivityDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		String sql = "select a_num, u_num, a_title, a_content, a_writedate, a_path, a_hits, a_star from ("
-				+ "select rownum rnum, a_num, u_num, a_title, a_content, a_writedate, a_path, a_hits, a_star from ("
-				+ "select * from activity a order by a.a_num desc ) where rownum <= ? ) where rnum >= ?";
-
-		// 필요한 것
-		/*
-		 * select f_num, u_num, f_writedate, f_path, f_title, f_hits, f_star from (
-		 * select rownum rnum, f_num, u_num, f_writedate, f_path, f_title, f_hits,
-		 * f_star from ( select * from food f order by f.f_num desc ) where rownum <= ?
-		 * ) where rnum >= ?;
-		 */
+		String sql = "select a_num, u_num, a_title, a_content, a_writedate, "
+				+ " (select count(*) from a_like a2 where a2.a_num = at.a_num) as a_like , a_path, a_hits, a_star "
+				+ " from (select rownum rnum, a_num, u_num, a_title, a_content, a_writedate, a_path, a_hits, a_star "
+				+ " from (select * from activity a order by a.a_num desc ) where rownum <= ? ) at where rnum >= ?";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -176,9 +170,10 @@ public class ActivityDao {
 				activity.setA_title(rs.getString(3));
 				activity.setA_content(rs.getString(4));
 				activity.setA_writedate(rs.getDate(5));
-				activity.setA_path(rs.getString(6));
-				activity.setA_hits(rs.getInt(7));
-				activity.setA_star(rs.getInt(8));
+				activity.setA_like(Integer.parseInt(rs.getString("a_like")));
+				activity.setA_path(rs.getString(7));
+				activity.setA_hits(rs.getInt(8));
+				activity.setA_star(rs.getInt(9));	
 				list.add(activity);
 			}
 
@@ -231,83 +226,206 @@ public class ActivityDao {
 		}
 	}
 
-	// 좋아요 누르면 테이블 insert
-	public int addLike(Connection conn, int u_num, int a_num) {
-		int rCnt = 0;
-		PreparedStatement pstmt = null;
-
-		try {
-			String sql = "insert into a_like values (?,?)";
-
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setInt(1, u_num); // 회원번호
-			pstmt.setInt(2, a_num); // 글번호
-
-			rCnt = pstmt.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return rCnt;
-	}
-
-	// 좋아요 취소하면 delete
-	public int cancelLike(Connection conn, int u_num, int a_num) {
-		int rCnt = 0;
-		PreparedStatement pstmt = null;
-
-		try {
-			String sql = "delete from a_like where (u_num=? and a_num=?)";
-
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setInt(1, u_num); // 회원번호
-			pstmt.setInt(2, a_num); // 글번호
-
-			rCnt = pstmt.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return rCnt;
-	}
+	// 사용자가 클릭한 한 개의 게시글 출력/ 특정 게시물 존재여부 확인 (삭제 혹은 수정시)
+	   public Activity activityUser(Connection conn, int actNum) {
+	      
+		   Activity activity = null;
+	      ResultSet rs = null;
+	      
+	      String sql = " select a_num, a_path, a_title, a_writedate, a_hits, a_content,a_star,u_name "
+	            + " from dateuser join activity using(u_num) where a_num=? ";
+	      PreparedStatement pstmt = null;
+	      
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         
+	         pstmt.setInt(1, actNum);
+	         
+	         rs = pstmt.executeQuery();
+	         
+	         while(rs.next()) {
+	        	 activity = new Activity();
+	            
+	        	 activity.setA_num(rs.getInt(1));
+	        	 activity.setA_path(rs.getString(2));
+	        	 activity.setA_title(rs.getString(3));
+	        	 activity.setA_writedate(rs.getDate(4));
+	        	 activity.setA_hits(rs.getInt(5));
+	        	 activity.setA_content(rs.getString(6));
+	        	 activity.setA_star(rs.getInt(7));
+	        	 activity.setU_name(rs.getString(8));
+	        	 
+	         }
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }
+	      
+	      return activity;
+	      
+	   }
 	
-	// 특정 글의 좋아요 수를 구하는 코드
-	public int likeCount(Connection conn, int a_num) {
-		int rCnt = -1;
+	
+	
+	
+	// 좋아요  확인 (한사람인지 새로운사람인지.)
+		public int chkLike(Connection conn, int u_num, int a_num) {
+			int rCnt = 0;
+			PreparedStatement pstmt = null;
 
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+			try {
+				String sql = "select * from a_like where (u_num=? and a_num=?)";
 
-		String sql = "select count(*) from a_like where a_num=?";
+				pstmt = conn.prepareStatement(sql);
 
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, a_num);
+				pstmt.setInt(1, u_num); // 회원번호
+				pstmt.setInt(2, a_num); // 글번호
 
-			rs = pstmt.executeQuery();
+				rCnt = pstmt.executeUpdate();
 
-			if (rs.next()) {
-				rCnt = rs.getInt(1);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return rCnt;
 		}
 
-		return rCnt;
-	}
+		// 좋아요 insert
+		public int addLike(Connection conn, int u_num, int a_num) {
+			int rCnt = 0;
+			PreparedStatement pstmt = null;
+
+			try {
+				String sql = "insert into a_like values (?,?)";
+
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setInt(1, u_num); // 회원번호
+				pstmt.setInt(2, a_num); // 글번호
+
+				rCnt = pstmt.executeUpdate();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			return rCnt;
+		}
+
+		// 좋아요 delete
+		public int cancelLike(Connection conn, int u_num, int a_num) {
+			int rCnt = 0;
+			PreparedStatement pstmt = null;
+
+			try {
+				String sql = "delete from a_like where (u_num=? and a_num=?)";
+
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setInt(1, u_num); // 회원번호
+				pstmt.setInt(2, a_num); // 글번호
+
+				rCnt = pstmt.executeUpdate();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			return rCnt;
+		}
+		
+	// 삭제하면 좋아요테이블도 삭ㅈ[
+		public int deleteAll(Connection conn, int a_num) throws SQLException {
+			int rCnt = 0;
+			PreparedStatement pstmt = null;
+
+			String sql = "delete from a_like where a_num=?";
+			try {
+				pstmt = conn.prepareStatement(sql);
+
+				pstmt.setInt(1, a_num); // 글번호
+
+				rCnt = pstmt.executeUpdate();
+			} finally {
+				JdbcUtil.close(pstmt);
+			}
+
+			return rCnt;
+		}
+
+		// 좋아요 수
+		public int likeCount(Connection conn, int a_num) {
+			int rCnt = -1;
+
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+
+			String sql = "select count(*) from a_like where a_num=?";
+
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, a_num);
+
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					rCnt = rs.getInt(1);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return rCnt;
+		}
+		
+		public Activity selectDetail(Connection conn, int a_num) {
+			Activity activity = null;
+
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+
+			String sql = "select a_num,u_num,a_title,a_content,a_writedate,a_path,a_hits,a_star,u_name from activity a join dateuser u using(u_num) where a_num=?";
+
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setInt(1, a_num);
+
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					
+					activity = new Activity();
+					activity.setA_num(rs.getInt("a_num"));
+					activity.setU_num(rs.getInt("u_num"));
+					activity.setA_title(rs.getString("a_title"));
+					activity.setA_content(rs.getString("a_content"));
+					activity.setA_writedate(rs.getDate("a_writedate"));
+					activity.setA_path(rs.getString("a_path"));
+					activity.setA_hits(rs.getInt("a_hits"));
+					activity.setA_star(rs.getInt("a_star"));
+					activity.setU_name(rs.getString("u_name"));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return activity;
+		}
+		
+	
 }
