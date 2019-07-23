@@ -18,6 +18,8 @@ public class EditFoodService {
 		return service;
 	}
 
+	/*
+	// 에이젝스로 확인하기 전에 사용하던 체크코드
 	public boolean editMessageChk(int f_num, int u_num) throws SQLException, FoodNotFoundException, NotMatchUserException {
 		boolean result = false;
 
@@ -47,6 +49,7 @@ public class EditFoodService {
 
 		return result;
 	}
+	*/
 	
 	// 글 수정
 	public int edit(Food food) {

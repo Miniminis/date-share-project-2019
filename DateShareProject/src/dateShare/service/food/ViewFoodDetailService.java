@@ -25,7 +25,7 @@ public class ViewFoodDetailService {
 			
 			FoodDao dao = FoodDao.getInstance();
 			
-			food = dao.select(conn, f_num); // Food 객체 반환
+			food = dao.selectDetail(conn, f_num); // Food 객체 반환
 			food.setF_like(dao.likeCount(conn, f_num));
 			dao.addHit(conn, f_num); //조회수+1
 			
