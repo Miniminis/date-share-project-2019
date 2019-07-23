@@ -9,7 +9,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%-- <jsp:useBean id="movietext" class="dateShare.Model.Movie" scope="request"/> --%>
+<%-- <jsp:useBean id="movietext" class="dateShare.Model.Movie" scope="request"/> 
+<jsp:setProperty property="*" name="movietext"/> --%>
 
 <% 
 	String mTitle = "";
@@ -70,12 +71,6 @@
 	LoginInfo curuser = (LoginInfo) session.getAttribute("userInfo");
 		
 	Movie movietext = new Movie(curuser.getU_num(), mTitle, mContent, fileDBPath, mStar);
-		
-%>
-
-<%-- <jsp:setProperty property="*" name="movietext"/> --%>
-
-<%
 	
 	WriteMovieService service = WriteMovieService.getInstance();
 	int resultCnt = service.write(movietext);

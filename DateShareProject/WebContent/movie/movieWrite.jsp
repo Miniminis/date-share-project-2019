@@ -16,9 +16,10 @@
 	$(document).ready(function () {
 	   $('.starRev span').click(function(){
 
-	        $(this).parent().children('span').removeClass('on');   //
-	        $(this).addClass('on').prevAll('span').addClass('on'); //prevAll('span') : 해당 요소 전까지 모든 자매들을 같이 처리
-	        $('#mStar').val($(this).text());   
+	        $(this).parent().children('span').removeClass('on');   //이전의 체크된 별점을 없에고 
+	        $(this).addClass('on').prevAll('span').addClass('on'); //현재 클릭한 span 위치까지만 on 클래스 적용 
+	        //alert($(this).text());														//prevAll('span') : 해당 요소 전까지 모든 자매들을 같이 처리
+	        $('#mStar').val($(this).text());   //체크된 span에 있는 text 요소를 출력 --> hidden input으로 같이 전달 
 	        
 	        return false;
 	      });
@@ -48,21 +49,21 @@
 			            		<strong class="align-left mr-3">추천별점     </strong>
 				            		<div class="starRev align-left">
 									  <span class="starR1 on">1</span>
-									  <span class="starR2">2</span>
-									  <span class="starR1">3</span>
-									  <span class="starR2">4</span>
-									  <span class="starR1">5</span>
-									  <span class="starR2">6</span>
-									  <span class="starR1">7</span>
-									  <span class="starR2">8</span>
-									  <span class="starR1">9</span>
-									  <span class="starR2">10</span>
+									  <span class="starR2 on">2</span>
+									  <span class="starR1 on">3</span>
+									  <span class="starR2 on">4</span>
+									  <span class="starR1 on">5</span>
+									  <span class="starR2 on">6</span>
+									  <span class="starR1 on">7</span>
+									  <span class="starR2 on">8</span>
+									  <span class="starR1 on">9</span>
+									  <span class="starR2 on">10</span>
 									</div>
 			            		<input type="hidden" id="mStar" name="m_star" class="mr-5">
 			            	</div>			           
 			           	</div>
 			           	<hr>
-			           	<textarea name="m_content" class="transparent pd-10" rows="15" cols="85" placeholder="내용을 입력해주세요"></textarea>
+			           	<textarea name="m_content" class="transparent pd-10" rows="15" cols="78" placeholder="내용을 입력해주세요"></textarea>
 	           			<hr>
 		            	<input type="submit" value="글 등록하기" class="btn btn-md btn-outline-secondary btn-block">
             		</form>

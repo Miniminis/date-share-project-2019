@@ -83,7 +83,7 @@
 			       	</div>
 			       	<hr>
 			       	<div class="mr-30">
-	            		<textarea name="m_content" class="transparent pd-10" rows="15" cols="85">
+	            		<textarea name="m_content" class="transparent pd-10" rows="15" cols="75">
 	            			<%= movieContent.getM_content() %>
 	            		</textarea>
 	            	</div>
