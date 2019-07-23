@@ -62,15 +62,16 @@
             				<div class="col-md-4">
             				<a href="movieContentView.jsp?articleNum=<%= movie.getM_num() %>"> 
             				<div class="card mb-4 shadow-sm">
-	            				<svg class="bd-placeholder-img card-img-top" width="100%" height="200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
+	            				<svg class="bd-placeholder-img card-img-top" width="100%" height="200" 
+	            					xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img">
 	            					<image xlink:href="<%= movie.getM_path() %>" width="100%" height="225">
 	            				</svg> 
 	            				<div class="card-body">
 	            				 <p class="card-text">
-	            				 	제목 <%= movie.getM_title() %><br>
-	            				 	작성자 <%= movie.getU_name() %><br>
-	           						조회수 <%= movie.getM_hits() %> 
-	           						좋아요 <i class="fas fa-heart"></i>
+	            				 	<strong>제목</strong> <%= movie.getM_title() %><br>
+	            				 	<strong>작성자</strong> <%= movie.getU_name() %><br>
+	           						<strong>조회수</strong> <%= movie.getM_hits() %> 
+	           						<strong>좋아요</strong><i class="fas fa-heart"></i>
 	           						<%= likeOriginCnt = likeservice.getLikeOrigin(movie.getM_num()) %>	           	
 	            				  </p> 
 	            				 <div class="d-flex justify-content-between align-items-center">
