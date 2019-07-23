@@ -2,7 +2,10 @@
 <%@page import="dateShare.Model.Activity"%>
 <%@page import="dateShare.service.activity.ViewActivityDetailService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
+<%				
+	session = request.getSession(false);
+	LoginInfo dongjun = (LoginInfo) session.getAttribute("userInfo");
+
 	ViewActivityDetailService service = ViewActivityDetailService.getInstance();
 	int a_num = Integer.parseInt(request.getParameter("a_num"));
 	Activity activity = service.viewDetail(a_num);
@@ -60,7 +63,7 @@
 						<tr>
 							<td colspan="2">
 								<input type="hidden" name="a_num" value="<%=a_num%>">
-								<input type="hidden" name="u_num" value="<%=session.getAttribute("u_num") %>">
+								<input type="hidden" name="u_num" value="<%= dongjun.getU_num() %>">
 								<input type="submit" value="등록">
 							</td>
 						</tr>

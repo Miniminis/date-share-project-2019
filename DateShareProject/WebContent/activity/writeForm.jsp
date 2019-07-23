@@ -1,4 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<script type="text/javascript" language="javascript">
+
+ /*  $(document).ready(function(){
+    	
+        $.ajax({
+            type : "POST", //전송방식 지정
+            url : "writeActivity.jsp",//호출 URL을 설정한다. 
+            dataType : "html",//호출한 페이지의 형식
+            error : function(){
+                alert("글작성에 실패하였습니다. \n 제목과 내용을 다시 확인하여 주세요");
+            },
+            success : function(successInsert){
+                $("#successInsert").html(successInsert); //div에 받아온 값을 넣는다.
+                alert("통신 데이터 값 : " + successInsert);
+            }
+             
+        });
+    }); */
+  </script>
+<%				
+
+
+	session = request.getSession(false);
+	LoginInfo dongjun = (LoginInfo) session.getAttribute("userInfo");
+				
+
+
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,7 +81,7 @@
 						<!-- 할수있다면 지도 -->
 						<tr>
 							<td colspan="2">
-								<input type="hidden" name="u_num" value="<%=session.getAttribute("u_num") %>"><!-- 유저번호 가져오기 -->
+								<input type="hidden" name="u_num" value="<%= dongjun.getU_num() %>"><!-- 유저번호 가져오기 -->
 								<input type="submit" value="등록">
 							</td>
 						</tr>

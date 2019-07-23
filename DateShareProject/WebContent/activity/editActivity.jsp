@@ -1,3 +1,4 @@
+<%@page import="dateShare.Model.LoginInfo"%>
 <%@page import="dateShare.service.activity.EditActivityService"%>
 <%@page import="dateShare.Model.Activity"%>
 <%@page import="java.io.File"%>
@@ -15,10 +16,9 @@
 <%
 	/* WriteActivityService service = WriteActivityService.getInstance();
 	int cnt = service.write(activity); */
-%>
-<%
-	int a_num = 0;
+
 	int u_num = 0;
+	int a_num = 0;
 	String a_title = "";
 	String a_path = "";
 	int a_star = 0;
@@ -55,7 +55,7 @@
 				} else if (file.getFieldName().equals("u_num")) {
 					u_num = Integer.parseInt(file.getString("utf-8"));
 				}
-					
+
 			} else {
 				//(2) 파일형식인 경우 --> 파일 경로 분기처리 : 1. 파일이 있는 경우 2. 파일이 없는 경우
 				if (file.getFieldName().equals("a_path")) {
@@ -88,20 +88,10 @@
 </head>
 <body>
 	<h1>
-		글번호 :
-		<%=actFile.getA_num()%>
-		회원번호:
-		<%=actFile.getU_num()%>
-		제목
-		<%=actFile.getA_title()%>
-		내용
-		<%=actFile.getA_content()%>
-		경로
-		<%=actFile.getA_path()%>
-		
-
-
-		<%= cnt > 0 ? "게시글을 수정하였습니다" : "게시글 수정 실패"%>
+		<script>
+			alert('수정완료');
+			location.href = "activityList.jsp";
+		</script>
 	</h1>
 	<a href="activityList.jsp">목록보기</a>
 </body>

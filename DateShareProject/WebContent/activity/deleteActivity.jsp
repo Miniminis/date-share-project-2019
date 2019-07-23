@@ -2,10 +2,15 @@
 <%@page import="dateShare.service.activity.ActivityNotFoundException"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="dateShare.service.activity.DeleteActivityService"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%
+	session = request.getSession(false);
+	LoginInfo dongjun = (LoginInfo) session.getAttribute("userInfo");
+
+	int u_num = dongjun.getU_num();
 	int a_num = Integer.parseInt(request.getParameter("a_num"));
-	int u_num = Integer.parseInt(request.getParameter("u_num"));
+	/* 	int u_num = Integer.parseInt(request.getParameter("u_num")); */
 
 	// 서비스 객체 생성 
 	DeleteActivityService service = DeleteActivityService.getInstance();
@@ -47,17 +52,25 @@
 			<div id="content">
 				<h1>
 
+
+					
+					
 					<%
 						if (chk) {
 					%>
-
-					<%=resultCnt%>개의 행이 삭제되었습니다.
+					
+					<script>
+						alert('삭제되었습니다.');
+						location.href = "activityList.jsp";
+					</script>			
 
 					<%
 						} else {
 					%>
-
-					<%=msg%>
+					<script>
+						alert('작성자가 아닙니다. \n삭제하실 수 없습니다.');
+						location.href = "activityList.jsp";
+					</script>
 
 					<%
 						}

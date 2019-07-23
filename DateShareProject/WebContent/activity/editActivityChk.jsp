@@ -3,16 +3,21 @@
 <%@page import="dateShare.service.activity.ActivityNotFoundException"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="dateShare.service.activity.DeleteActivityService"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%
+	session = request.getSession(false);
+	LoginInfo dongjun = (LoginInfo) session.getAttribute("userInfo");
+	
+	int u_num = dongjun.getU_num();
 	int a_num = Integer.parseInt(request.getParameter("a_num"));
-	int u_num = Integer.parseInt(request.getParameter("u_num"));
+	/* int u_num = Integer.parseInt(request.getParameter("u_num")); */
 
 	// 서비스 객체 생성 
 	EditActivityService service = EditActivityService.getInstance();
 
 	boolean chk = false; // 오류발생했는지 확인하려고 정상처리 되었나 오류발생했나
-	String msg = ""; // 예외발생시 메시지 담아서 처리하고싶음.
+	String 	msg = ""; // 예외발생시 메시지 담아서 처리하고싶음.
 
 	try {
 		chk = service.editMessageChk(a_num, u_num);
@@ -48,14 +53,17 @@
 
 					<%
 						if (chk) {
-							response.sendRedirect("editActivityForm.jsp?a_num="+a_num);
+							response.sendRedirect("editActivityForm.jsp?a_num=" + a_num);
 					%>
 
 					<%
 						} else {
 					%>
 
-					<%=msg%>
+					<script>
+					alert('작성자가 아닙니다. \n수정하실 수 없습니다.');
+					location.href="activityList.jsp";
+					</script>
 
 					<%
 						}

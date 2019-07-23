@@ -1,3 +1,4 @@
+<%@page import="dateShare.Model.LoginInfo"%>
 <%@page import="dateShare.Model.Activity"%>
 <%@page import="java.io.File"%>
 <%@page import="java.util.Iterator"%>
@@ -15,8 +16,10 @@
 	/* WriteActivityService service = WriteActivityService.getInstance();
 	int cnt = service.write(activity); */
 %>
+
 <%
-	int u_num= 0;
+	
+	int u_num = 0;
 	String a_title = "";
 	String a_path = "";
 	int a_star = 0;
@@ -41,7 +44,7 @@
 			FileItem file = itr.next();
 
 			if (file.isFormField()) {
-		// 타입이 파일이 아닌경우
+				// 타입이 파일이 아닌경우
 				if (file.getFieldName().equals("a_title")) {
 					a_title = file.getString("utf-8");
 				} else if (file.getFieldName().equals("a_star")) {
@@ -50,7 +53,7 @@
 					a_content = file.getString("utf-8");
 				} else if (file.getFieldName().equals("u_num")) {
 					u_num = Integer.parseInt(file.getString("utf-8"));
-				} 
+				}
 			} else {
 				//(2) 파일형식인 경우 --> 파일 경로 분기처리 : 1. 파일이 있는 경우 2. 파일이 없는 경우
 				if (file.getFieldName().equals("a_path")) {
@@ -67,7 +70,8 @@
 				}
 			}
 		}
-
+		
+		
 	}
 
 	Activity actFile = new Activity(u_num, a_title, a_content, fileDBPath, a_star);
@@ -84,11 +88,16 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div id = "successInsert">
 	<h1>
-	<%-- <%= actFile.getA_title() %>
+		<%-- <%= actFile.getA_title() %>
 	<%= cnt %> --%>
-		<%= cnt > 0 ? "게시글을 작성하였습니다" : "게시글 작성 실패" %>
+		<script>
+			alert('등록 완료');
+			location.href ="activityList.jsp";
+		</script>
 	</h1>
 	<a href="activityList.jsp">목록보기</a>
+	</div>
 </body>
 </html>
