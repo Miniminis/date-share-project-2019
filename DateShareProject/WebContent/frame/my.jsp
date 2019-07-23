@@ -10,5 +10,5 @@
 <div id="my">
 	<span>
 	<span id="my_info"><%= user.getU_name() %>(<%= user.getU_id() %>)님 환영합니다.</span>
-	<a href="<%= request.getContextPath() %>/user/logout.jsp">로그아웃</a> | <a href="#">내정보</a></span>
+	<a href="<%= request.getContextPath() %>/user/logout.jsp">로그아웃</a> | <a href="user/readMember.jsp">내정보</a></span>
 </div>

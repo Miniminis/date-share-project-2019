@@ -27,10 +27,9 @@
 <head>
 <meta charset="UTF-8">
 <title>DATE SHARE | ACTIVITY</title>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <link href="../css/index.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Eater|Josefin+Sans|Sunflower:300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Eater|Josefin+Sans|Sunflower:300&display=swap" rel="stylesheet">
 <style>
 #mainName{
             width: 300px;
