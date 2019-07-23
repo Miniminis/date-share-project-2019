@@ -1,20 +1,9 @@
-
-<%@page import="dateShare.Model.Food"%>
-<%@page import="dateShare.service.food.ViewFoodDetailService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-	ViewFoodDetailService service = ViewFoodDetailService.getInstance();
-	int f_num = Integer.parseInt(request.getParameter("f_num"));
-	Food food = service.viewDetail(f_num);
-
-	session = request.getSession(false);
-	LoginInfo currentUser = (LoginInfo) session.getAttribute("userInfo");
-%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>DATE SHARE</title>
+<title>DATE SHARE | FOOD</title>
 <link href="../css/index.css" rel="stylesheet" type="text/css">
 <style>
 .starR1 {
@@ -99,23 +88,9 @@ textarea {
 	padding: 20px 0;
 	font-weight: bold;
 }
-
-#content img {
-	text-align: center;
-	width: 440px;
-}
-#h_title{
-	padding: 20px 0;
-	font-weight: bold;
-}
 #content_title {
 	padding-bottom: 30px;
 }
-
-.file_input label {position:relative; cursor:pointer; display:inline-block; vertical-align:middle; overflow:hidden; width:440px; height:25px; background:rgba(0,0,0,0.0); text-align:center; line-height:25px; border: 1px solid #888;}
-.file_input label input {position:absolute; width:0; height:0; overflow:hidden;}
-.file_input input[type=text] {vertical-align:middle; display:inline-block; width:440px; height:25px; line-height:25px; font-size:11px; padding:0; border:0;}
-
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://kit.fontawesome.com/8653072c68.js"></script>
@@ -131,6 +106,12 @@ textarea {
 	});
 </script>
 </head>
+<!-- 글쓰기를 눌렀을 때 현재 로그인 된 사용자, 임시로 넣었다 -->
+<%-- 	<% session.setAttribute("u_num",5);%>  --%>
+<%
+	session = request.getSession(false);
+	LoginInfo currentUser = (LoginInfo) session.getAttribute("userInfo");
+%>
 <body>
 	<div id="wrap">
 		<div id="main_wrap">
@@ -144,55 +125,43 @@ textarea {
 			<div id="content">
 				<div id="content_title">
 					<div id="h_title">
-						<i class="fas fa-utensils"></i> 맛집 공유 게시판 | 글수정
+						<i class="fas fa-utensils"></i> 
+						맛집 공유 게시판 | 글쓰기
 					</div>
 				</div>
-				<form action="editFood.jsp" method="post" enctype="multipart/form-data" name="editForm" id="editForm">
-				
-				
-				
+				<div id="detail_wrap">
+
+					<form action="writeFood.jsp" method="post" enctype="multipart/form-data" name="writeForm" id="writeForm">
 						<!-- 제목 -->
 						<center>
 							<p id="input_title">
-								<input type="text" name="f_title" value="<%=food.getF_title()%>">
+								<input type="text" name="f_title" placeholder="제목">
 							</p>
 							<br>
 
 							<div class="starRev">
-								<span class="starR1 on">1</span> <span class="starR2">2</span> <span class="starR1">3</span> <span class="starR2">4</span> <span class="starR1">5</span> <span class="starR2">6</span> <span class="starR1">7</span> <span class="starR2">8</span> <span class="starR1">9</span> <span class="starR2">10</span> <span>
-								<input type="text" id="star" name="f_star" value="<%=food.getF_star()%>">
-				
-								<span>
+								<span class="starR1 on">1</span> <span class="starR2">2</span> <span class="starR1">3</span> <span class="starR2">4</span> <span class="starR1">5</span> <span class="starR2">6</span> <span class="starR1">7</span> <span class="starR2">8</span> <span class="starR1">9</span> <span class="starR2">10</span> <span><input type="text" id="star" name="f_star"><span>
 							</div>
 
 							<br>
-							
-							<p><img src="<%=food.getF_path()%>"></p>
+
 							<p>
-
-							<div class="file_input">
 							
-							<label>
-							사진 첨부하기 <input type="file" onchange="javascript:document.getElementById('input_path').value=this.value" name="f_path">
-							</label>
-							<br>
-							<input type="text" readonly="readonly" id="input_path" value="<%=food.getF_path()%>">
-							</div>
-
+								
+								<input type="file" name="f_path" id="input_path">
+								
 							</p>
 							<br>
 							<!-- 내용 -->
 							<div>
-								<textarea rows="5" cols="30" name="f_content"><%=food.getF_content()%></textarea>
+								<textarea rows="5" cols="30" name="f_content"></textarea>
 							</div>
-							<br> 
-							<input type="hidden" name="f_num" value="<%=f_num%>">
-							<input type="hidden" name="u_num" value="<%=currentUser.getU_num()%>"> 
+							<br> <input type="hidden" name="u_num" value="<%=currentUser.getU_num()%>"> 
 							<input id = "input_submit" type="submit" value="등록">
 						</center>
 
-				</form>
-
+					</form>
+				</div>
 
 			</div>
 			<div id="footer">
@@ -202,6 +171,20 @@ textarea {
 	</div>
 </body>
 <script>
-
+	//게시글 작성
+	/*  function formSubmit() {
+	 alert('안뇽');
+	 var params = $('#writeForm').serialize();
+	 $.ajax ({
+	 url: 'writeFood.jsp',
+	 type: 'post',
+	 data : params,
+	 success: function(data){
+	 alert(data);
+	 //location.href='foodList.jsp';
+	 }
+	 }); 
+	 }  
+	 */
 </script>
 </html>
