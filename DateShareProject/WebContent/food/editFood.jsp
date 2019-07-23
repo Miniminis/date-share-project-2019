@@ -9,15 +9,9 @@
 <%@ page import="dateShare.service.food.WriteFoodService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%
-	//request.setCharacterEncoding("utf-8");
-%>
 <jsp:useBean id="food" class="dateShare.Model.Food" />
 <jsp:setProperty property="*" name="food" />
-<%
-	/* 	EditFoodService service = EditFoodService.getInstance();
-		int cnt = service.edit(food); */
-%>
+
 <%
 	int f_num = 0;
 	int u_num = 0;
@@ -82,19 +76,20 @@
 	EditFoodService service = EditFoodService.getInstance();
 	int cnt = service.edit(foodFile);
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<h1> u넘:
-		<%=u_num%>
-		글번호 :
-		<%=f_num%>
-		<%=cnt > 0 ? "게시글을 수정하였습니다" : "게시글 수정 실패"%>
-	</h1>
-	<a href="foodList.jsp">목록보기</a>
-</body>
-</html>
+<input type="hidden" id="cnt" value="<%=cnt%>">
+<script>
+	//alert($('#cnt').val());
+	/* document.ready(function() {
+		if ($('#cnt').val() > 0) {
+			alert('게시글을 수정하였습니다');
+			location.href = 'foodList.jsp';
+		} else {
+			alert('게시글을 수정 실패');
+		}
+	}); */
+	
+	alert('게시글을 수정하였습니다');
+	location.href = 'foodList.jsp';
+</script>
+<%-- <%=cnt > 0 ? "게시글을 수정하였습니다" : "게시글 수정 실패"%> --%>
+

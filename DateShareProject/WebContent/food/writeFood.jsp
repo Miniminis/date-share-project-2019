@@ -8,15 +8,8 @@
 <%@ page import="dateShare.service.food.WriteFoodService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%
-	//request.setCharacterEncoding("utf-8");
-%>
 <jsp:useBean id="food" class="dateShare.Model.Food" />
 <jsp:setProperty property="*" name="food" />
-<%
-	/* 	WriteFoodService service = WriteFoodService.getInstance();
-		int cnt = service.write(food); */
-%>
 
 <%
 	int u_num = 0;
@@ -64,22 +57,11 @@
 	Food foodFile = new Food(u_num, f_title, f_content, fileDBPath, f_star);
 	WriteFoodService service = WriteFoodService.getInstance();
 	int cnt = service.write(foodFile);
-%>
+	String str = cnt > 0 ? "게시글을 작성하였습니다" : "게시글 작성 실패";
+	//out.print(str);
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<h1>
-		<%=cnt > 0 ? "게시글을 작성하였습니다" : "게시글 작성 실패"%>
-		제목 :
-		<%=f_title%>
-		cnt :<%=cnt%>
-		유저번호 <%=u_num %>
-	</h1>
-	<a href="foodList.jsp">목록보기</a>
-</body>
-</html>
+%>
+<script>
+	alert('게시글을 작성하였습니다');
+	location.href = 'foodList.jsp';
+</script>
