@@ -6,15 +6,16 @@ public class Message {
 	
 	private int m_num; 		  //메세지 번호
 	private int u_num; 		  //보낸사람 회원번호
+	private int rownum;		  //회원별 쪽지 번호출력
 	private String u_name;	  //보낸사람이름
 	private String u_id;	  //보낸사람아이디
 	private String m_to; 	  //받는사람
 	private String m_title;   //쪽지제목
 	private String m_content; //쪽지내용
 	private Date m_writedate; //보낸시간
-	private String m_date; //형식이 바뀐 시간
+	private String m_date;    //형식이 바뀐 시간
 	
-	
+
 	public String getM_to() {
 		return m_to;
 	}
@@ -69,8 +70,12 @@ public class Message {
 	public void setU_id(String u_id) {
 		this.u_id = u_id;
 	}
-	
-	
+	public int getRownum() {
+		return rownum;
+	}
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
+	}
 	
 	
 }

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,12 +26,13 @@
            </div>
            <div id="cform_wrap">
             <form action="writeMessage.jsp" method="post">
-                <span><label>보내는 사람</label> <%= user.getU_name() %>(<%= user.getU_id() %>) <input name="u_num" type="hidden" value="<%= user.getU_num() %>"> </span><br>
-            	<span><label for="to">받는사람</label></span><input id="to" class="c_input" type="text" name="m_to"><br>
+                <span><label>보내는 사람</label> <%= user.getU_name() %>(<%= user.getU_id() %>)
+                <input name="u_num" type="hidden" value="<%= user.getU_num() %>"> </span><br>
+            	<span><label for="to">받는사람</label></span><input id="to" class="c_input" type="text" name="m_to" required><br>
             	<span><label for="title">제목</label></span>
-                <input id="title" class="c_input" type="text" name="m_title"><br>
+                <input id="title" class="c_input" type="text" name="m_title" required><br>
                 <span><label for="text">내용</label></span>
-                <textarea id="text" class="c_input_t" name="m_content" rows="5"></textarea><br>
+                <textarea id="text" class="c_input_t" name="m_content" rows="5" required></textarea><br>
             	<input class="c_btn" type="submit" value="보내기">
             	<a id="c_btna" href="messageList.jsp">이전으로</a>
             </form>
@@ -45,3 +45,6 @@
 </div>
 </body>
 </html>
+
+
+

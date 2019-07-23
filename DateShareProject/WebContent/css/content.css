@@ -32,15 +32,16 @@ a {
 	padding: 0 5px 0 0;
 }
 
-#m_show div:nth-child(4) {
+#m_show div:last-child {
 	border: 0;
 }
 
-#m_show div:nth-child(4)>p {
+#m_show div:last-child>p {
 	margin: 10px 0 0 0;
 	border: solid 1px;
 	padding: 5px 10px 15px 10px;
 }
+
 
 .m_btn2 {
 	display: inline-block;
@@ -65,7 +66,6 @@ a {
 	text-align: center;
 	width: 700px;
 	margin: auto;
-	font-weight: normal;
 }
 
 #content_title {
@@ -160,14 +160,9 @@ a {
 	padding: 20px 0px;
 }
 
-#m {
-	text-align: right;
-	padding: 0 0 30px 0;
-}
 
 #m a:hover {
 	color: #de87a4;
-	font-weight: bold;
 }
 
 #send_m {
@@ -184,3 +179,15 @@ a {
 	border: solid 1px;
 	margin: 10px 5px 100px 0;
 }
+
+#m > .m_btn {
+	margin: 0 0 20px 0;
+}
+
+
+#cform_wrap label{
+	
+	font-weight: bold;
+}
+
+

@@ -12,10 +12,9 @@ import dateShare.Model.Message;
 import jdbc.JdbcUtil;
 
 public class MessageDao {
-	// 인스턴스 생성
+
 	private static MessageDao mDao = new MessageDao();
 
-	// 외부에서 dao 객체를 가져갈수있도록 처리 : 싱글톤
 	public static MessageDao getInstance() {
 		return mDao;
 	}
@@ -162,11 +161,12 @@ public class MessageDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		String sql = "select m_num, d.u_name, d.u_id, m_title, m_writedate from("
+		String sql = "select rownum, m_num, d.u_name, d.u_id, m_title, m_writedate from("
 				+ "select rownum rnum, m_num, u_num, m_title, m_content,m_writedate,m_to from ("
-				+ "select * from message m order by m.m_num desc) where rownum <= ? "
+				+ "select * from message m) where rownum <= ? "
 				+ ")join dateuser d using(u_num) where rnum >= ? and m_num in("
-				+ "select m.m_num from message m, dateuser d where m.u_num = d.u_num and m.m_to = ?) order by m_writedate desc";
+				+ "select m.m_num from message m, dateuser d where m.u_num = d.u_num and m.m_to = ?)"
+				+ " order by m_writedate desc";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -179,9 +179,80 @@ public class MessageDao {
 
 			while (rs.next()) {
 				Message msg = new Message();
-				msg.setM_num(rs.getInt(1));
-				msg.setU_name(rs.getString(2));
-				msg.setU_id(rs.getString(3));
+				msg.setRownum(rs.getInt(1));
+				msg.setM_num(rs.getInt(2));
+				msg.setU_name(rs.getString(3));
+				msg.setU_id(rs.getString(4));
+				msg.setM_title(rs.getString(5));
+				msg.setM_writedate(rs.getDate(6));
+
+				list.add(msg);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+	public int sendSelectCount(Connection conn, int u_num) {
+
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+
+		int totalCnt = 0;
+
+		String sql = "select count(*) from message join dateuser using(u_num) where u_num = ?";
+
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, u_num);
+			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				totalCnt = rs.getInt(1);
+				
+			}
+			
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return totalCnt;
+	}
+
+	
+	
+	
+	public List<Message> sendSelectList(Connection conn, int firstRow, int endRow, int u_num) {
+		List<Message> list = new ArrayList<Message>();
+
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		String sql = "select rownum, m_num,m_to,m_title,m_writedate from(select rownum rnum, m_num, u_num, m_title, m_content,m_writedate,m_to from "
+				+ "(select * from message m) where rownum <= ?) where rnum >= ? and u_num = ? order by m_writedate desc";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, endRow);
+			pstmt.setInt(2, firstRow);
+			pstmt.setInt(3, u_num);
+			 
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Message msg = new Message();
+				msg.setRownum(rs.getInt(1));
+				msg.setM_num(rs.getInt(2));
+				msg.setM_to(rs.getString(3));
 				msg.setM_title(rs.getString(4));
 				msg.setM_writedate(rs.getDate(5));
 
@@ -196,7 +267,6 @@ public class MessageDao {
 		return list;
 	}
 	
-
 	public int deleteMessage(Connection conn, int m_num) throws SQLException {
 
 		int resultCnt = 0;
@@ -219,4 +289,6 @@ public class MessageDao {
 		return resultCnt;
 
 	}
+
+
 }

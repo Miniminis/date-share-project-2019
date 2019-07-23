@@ -44,6 +44,9 @@
 						보낸사람 <span><%= m.getU_name() %>(<%= m.getU_id() %>)</span>
 					</div>
 					<div>
+						받은사람 <span><%= m.getM_to() %></span>
+					</div>
+					<div>
 						제목 <span><%= m.getM_title() %></span>
 					</div>
 					<div>
