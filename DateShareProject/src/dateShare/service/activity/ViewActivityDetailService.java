@@ -24,7 +24,8 @@ public class ViewActivityDetailService {
 			
 			ActivityDao dao = ActivityDao.getInstance();
 			
-			activity = dao.select(conn, a_num); // Food 객체 반환
+			activity = dao.selectDetail(conn, a_num); // Food 객체 반환
+			activity.setA_like(dao.likeCount(conn, a_num));
 			dao.addHit(conn, a_num); //조회수+1
 			
 		} catch (SQLException e) {
