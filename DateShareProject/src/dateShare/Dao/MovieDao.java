@@ -44,8 +44,8 @@ public class MovieDao {
 	public int insert(Connection conn, Movie movietext) {
 	
 		PreparedStatement pstmt = null;
-		String sql ="insert into movie values(null, ?, ?, ?, default, ?, default, default)";
-		//String sql = "insert into movie values (MOVIE_SEQ.nextval, ?, ?, ?, default, ?, default, default)";
+		//String sql ="insert into movie values(null, ?, ?, ?, default, ?, default, ?)";
+		String sql = "insert into movie values (MOVIE_SEQ.nextval, ?, ?, ?, default, ?, default, ?)";
 		int resultCnt = 0;
 		
 		try {
@@ -55,6 +55,7 @@ public class MovieDao {
 			pstmt.setString(2, movietext.getM_title());
 			pstmt.setString(3, movietext.getM_content());
 			pstmt.setString(4, movietext.getM_path());
+			pstmt.setInt(5, movietext.getM_star());
 
 			resultCnt = pstmt.executeUpdate();
 			
@@ -218,8 +219,8 @@ public class MovieDao {
 		int resultCnt = 0;
 		PreparedStatement pstmt;
 		
-		String sql = "update movie set m_hits = IFNULL(m_hits, 0) +1 where m_num=?"; 
-		//String sql = "update movie set m_hits = NVL(m_hits, 0) + 1 where m_num=?";
+		//String sql = "update movie set m_hits = IFNULL(m_hits, 0) +1 where m_num=?"; 
+		String sql = "update movie set m_hits = NVL(m_hits, 0) + 1 where m_num=?";
 		try {
 			conn = ConnectionProvider.getConnection();
 			pstmt = conn.prepareStatement(sql);
