@@ -64,25 +64,13 @@ body {
 
 #writeBtn {
 	float: right;
+	margin-right: 20px;
 }
 
 #content_title {
 	padding-bottom: 30px;
 }
 
-/* 
-#f_l {
-	width: 50%;
-}
-
-#f_r {
-	width: 40%;
-	float: right;
-}
-
-#d{
-	clear: both;
-} */
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 </head>
@@ -100,7 +88,7 @@ body {
 
 				<div id="content_title">
 					<div id="h_title">
-						맛집 공유 게시판
+						<i class="fas fa-utensils"></i> 맛집 공유 게시판
 						<p id="writeBtn">
 							<a href="writeForm.jsp"><input type="button" class="btn btn-sm btn-outline-secondary" value="글 등록하기"></a>
 						<p>
@@ -129,15 +117,14 @@ body {
 									<div id="f_r">
 
 										<%
-											//
-													int yellowStar = food.getF_star() / 2;
-													int grayStar = food.getF_star() % 2;
-													for (int i = 0; i < yellowStar; i++) {
+											int yellowStar = food.getF_star() / 2;
+											int grayStar = food.getF_star() % 2;
+											for (int i = 0; i < yellowStar; i++) {
 										%>
 										<i class="fas fa-star yellow"></i>
 										<%
 											}
-													if (grayStar > 0) {
+											if (grayStar > 0) {
 										%>
 										<i class="fas fa-star gray"></i>
 										<%
@@ -145,7 +132,6 @@ body {
 										%>
 									</div>
 
-									<%-- 	별점 : <%= food.getF_star() %> --%>
 									<br>
 									<!-- 제목 -->
 									<p id="card_title"><%=food.getF_title()%>

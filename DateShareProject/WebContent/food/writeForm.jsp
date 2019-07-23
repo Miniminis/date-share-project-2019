@@ -71,7 +71,8 @@ textarea {
 	font-size: 18px;
 	padding: 20px;
 }
-#input_submit{
+
+#input_submit {
 	background-color: rgba(255, 255, 255, 0);
 	border: 1px solid #888;
 	width: 440px;
@@ -80,19 +81,25 @@ textarea {
 	font-size: 16px;
 }
 
-#input_submit:hover{
-	background-color : rgba(0, 0, 0, 0.1);
+#input_submit:hover {
+	background-color: rgba(0, 0, 0, 0.1);
 }
 
-#h_title{
+#h_title {
 	padding: 20px 0;
 	font-weight: bold;
 }
+
 #content_title {
 	padding-bottom: 30px;
 }
+
+.file_input label {position:relative; cursor:pointer; display:inline-block; vertical-align:middle; overflow:hidden; width:440px; height:25px; background:rgba(0,0,0,0.0); text-align:center; line-height:25px; border: 1px solid #888;}
+.file_input label input {position:absolute; width:0; height:0; overflow:hidden;}
+.file_input input[type=text] {vertical-align:middle; display:inline-block; width:440px; height:25px; line-height:25px; font-size:11px; padding:0; border:0;}
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://kit.fontawesome.com/8653072c68.js"></script>
 <script>
 	$(document).ready(function() {
 		$('.starRev span').click(function() {
@@ -124,13 +131,12 @@ textarea {
 			<div id="content">
 				<div id="content_title">
 					<div id="h_title">
-						맛집 공유 게시판 | 글쓰기
+						<i class="fas fa-utensils"></i> 맛집 공유 게시판 | 글쓰기
 					</div>
 				</div>
 				<div id="detail_wrap">
 
 					<form action="writeFood.jsp" method="post" enctype="multipart/form-data" name="writeForm" id="writeForm">
-
 						<!-- 제목 -->
 						<center>
 							<p id="input_title">
@@ -145,16 +151,25 @@ textarea {
 							<br>
 
 							<p>
-								<input type="file" name="f_path" id="input_path">
-								
+
+							<div class="file_input">
+							
+							<label>
+							사진 첨부하기 <input type="file" onchange="javascript:document.getElementById('input_path').value=this.value" name="f_path">
+							</label>
+							<br>
+							<input type="text" readonly="readonly" id="input_path">
+							</div>
+
 							</p>
+							
 							<br>
 							<!-- 내용 -->
 							<div>
 								<textarea rows="5" cols="30" name="f_content"></textarea>
 							</div>
 							<br> <input type="hidden" name="u_num" value="<%=currentUser.getU_num()%>"> 
-							<input id = "input_submit" type="submit" value="등록">
+							<input id="input_submit" type="submit" value="등록">
 						</center>
 
 					</form>

@@ -1,7 +1,6 @@
 <%@page import="dateShare.Model.Food"%>
 <%@page import="dateShare.service.food.ViewFoodDetailService"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
 	// 클릭한 글의 글번호를 가져옴 - 디테일 뷰 메서드 실행
@@ -21,14 +20,12 @@
 <link href="../css/index.css" rel="stylesheet" type="text/css">
 <script src="https://kit.fontawesome.com/8653072c68.js"></script>
 <style>
-
-
 #detail_wrap {
 	width: 900px;
 	margin: 0 auto;
 	padding: 50px 20px;
-	margin : 20px;
-	background-color: rgba(255,255,255,0.3);
+	margin: 20px;
+	background-color: rgba(255, 255, 255, 0.3);
 	/* box-shadow: 3px 3px 1px rgba(0,0,0,0.1); */
 }
 
@@ -44,7 +41,7 @@
 	color: #FBAB00;
 }
 
-#nameDate , #editArea{
+#nameDate, #editArea {
 	text-align: right;
 	color: #777;
 	font-size: 14px;
@@ -60,32 +57,36 @@
 	padding-top: 15px;
 	font-size: 20px;
 }
+
 .gray {
 	color: #dddddd;
 }
-#like_wrap p{
+
+#like_wrap p {
 	display: inline;
 	height: 20px;
 }
-#like_wrap{
+
+#like_wrap {
 	text-align: right;
 	font-size: 20px;
 }
-#likeCount{
+
+#likeCount {
 	font-size: 20px;
 	line-height: 20px;
 }
 
-a:hover{
+a:hover {
 	cursor: pointer;
 	font-weight: bold;
 }
 
-.cursor{
+.cursor {
 	cursor: pointer;
 }
 
-#starArea{
+#starArea {
 	margin-bottom: 15px;
 }
 
@@ -93,13 +94,17 @@ textarea {
 	background-color: rgba(255, 255, 255, 0);
 	border: 0;
 	width: 600px;
-	height: 150px;
+	height: 100px;
 	font-size: 20px;
 	font-weight: bold;
 	text-align: center;
 	padding-top: 15px;
 }
 
+#h_title {
+	padding: 20px 0;
+	font-weight: bold;
+}
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
@@ -116,8 +121,11 @@ textarea {
 				<%@include file="../frame/nav.jsp"%>
 			</div>
 			<div id="content">
-				<!-- 				<h3>상세보기</h3> -->
-				<br>
+				<div id="content_title">
+					<div id="h_title">
+						<i class="fas fa-utensils"></i> 맛집 공유 게시판
+					</div>
+				</div>
 				<div id="detail_wrap">
 
 
@@ -157,22 +165,27 @@ textarea {
 					</center>
 
 					<div id="like_wrap">
-					<p>
-						<i id="heart" class="fas fa-heart red fa-2x cursor"
-							onclick="like(<%=food.getF_num()%>)"></i>
-					<p id="likeCount"><%=food.getF_like()%></p>
-	
+						<p>
+							<!-- 조회수 -->
+							<i class="far fa-eye"></i>
+							<%=food.getF_hits()%> 
+							<i id="heart" class="fas fa-heart red cursor" onclick="like(<%=food.getF_num()%>)"></i>
+						<p id="likeCount"><%=food.getF_like()%></p>
+
 					</div>
 
 
 					<br>
-					
-					<% if(currentUser.getU_num() == food.getU_num()){%>
-						<div id="editArea">
-							<a onclick="editFood(<%=food.getF_num()%>, <%=currentUser.getU_num()%>, <%=food.getU_num()%>)">수정</a> | 
-							<a onclick="deleteFood(<%=food.getF_num()%>, <%=currentUser.getU_num()%>, <%=food.getU_num()%>)">삭제</a>
-						</div>
-					<%}%>
+
+					<%
+						if (currentUser.getU_num() == food.getU_num()) {
+					%>
+					<div id="editArea">
+						<a onclick="editFood(<%=food.getF_num()%>, <%=currentUser.getU_num()%>, <%=food.getU_num()%>)">수정</a> | <a onclick="deleteFood(<%=food.getF_num()%>, <%=currentUser.getU_num()%>, <%=food.getU_num()%>)">삭제</a>
+					</div>
+					<%
+						}
+					%>
 
 
 				</div>

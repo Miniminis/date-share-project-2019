@@ -102,10 +102,23 @@ textarea {
 
 #content img {
 	text-align: center;
-	width: 800px;
+	width: 440px;
 }
+#h_title{
+	padding: 20px 0;
+	font-weight: bold;
+}
+#content_title {
+	padding-bottom: 30px;
+}
+
+.file_input label {position:relative; cursor:pointer; display:inline-block; vertical-align:middle; overflow:hidden; width:440px; height:25px; background:rgba(0,0,0,0.0); text-align:center; line-height:25px; border: 1px solid #888;}
+.file_input label input {position:absolute; width:0; height:0; overflow:hidden;}
+.file_input input[type=text] {vertical-align:middle; display:inline-block; width:440px; height:25px; line-height:25px; font-size:11px; padding:0; border:0;}
+
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://kit.fontawesome.com/8653072c68.js"></script>
 <script>
 	$(document).ready(function() {
 		$('.starRev span').click(function() {
@@ -129,7 +142,11 @@ textarea {
 				<%@include file="../frame/nav.jsp"%>
 			</div>
 			<div id="content">
-				<h3>맛집 공유 게시판 | 글 수정</h3>
+				<div id="content_title">
+					<div id="h_title">
+						<i class="fas fa-utensils"></i> 맛집 공유 게시판 | 글수정
+					</div>
+				</div>
 				<form action="editFood.jsp" method="post" enctype="multipart/form-data" name="editForm" id="editForm">
 				
 				
@@ -152,7 +169,16 @@ textarea {
 							
 							<p><img src="<%=food.getF_path()%>"></p>
 							<p>
-								<input type="file" name="f_path">
+
+							<div class="file_input">
+							
+							<label>
+							사진 첨부하기 <input type="file" onchange="javascript:document.getElementById('input_path').value=this.value" name="f_path">
+							</label>
+							<br>
+							<input type="text" readonly="readonly" id="input_path" value="<%=food.getF_path()%>">
+							</div>
+
 							</p>
 							<br>
 							<!-- 내용 -->
@@ -177,20 +203,5 @@ textarea {
 </body>
 <script>
 
-/*  // 폼에서 넘겨서 
-function formSubmit() {
-	var params = $('editForm').serialize();
-	$.ajax ({
-		url: 'editFood.jsp',
-		type: 'post',
-		data : params,
-		success: function(cnt){
-			alert($.trim(cnt));
-			location.href='foodList.jsp';
-		}
-	})
-}  */
-			
-	
 </script>
 </html>
