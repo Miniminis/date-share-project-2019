@@ -59,7 +59,7 @@ public class GetArticleListService {
 			//전체 게시글 개수 출력 
 			int totalArticleCnt = dao.selectCnt(conn);
 			
-			//전체 개시글 개수에 따른 
+			//전체 개시글 개수에 따른 분기처리
 			if(totalArticleCnt>0) {
 				movieList = dao.selectList(conn);
 			} else {			
