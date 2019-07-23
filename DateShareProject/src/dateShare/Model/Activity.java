@@ -14,9 +14,42 @@ public class Activity {
 	private String a_path; // 파일 경로
 	private int a_star; // 별점수
 	private int a_hits; // 조회수
+	private String u_name;
 
 	public Activity() {
 	}
+	
+
+	public Activity(int a_num, int u_num, String a_title, String a_content, Date a_writedate, int a_like, String a_path,
+			int a_star, int a_hits, String u_name) {
+		super();
+		this.a_num = a_num;
+		this.u_num = u_num;
+		this.a_title = a_title;
+		this.a_content = a_content;
+		this.a_writedate = a_writedate;
+		this.a_like = a_like;
+		this.a_path = a_path;
+		this.a_star = a_star;
+		this.a_hits = a_hits;
+		this.u_name = u_name;
+	}
+
+
+	public Activity(int a_num, String a_title, String a_content, Date a_writedate, int a_like, int a_star, int a_hits,
+			String u_name) {
+		super();
+		this.a_num = a_num;
+		this.a_title = a_title;
+		this.a_content = a_content;
+		this.a_writedate = a_writedate;
+		this.a_like = a_like;
+		this.a_star = a_star;
+		this.a_hits = a_hits;
+		this.u_name = u_name;
+	}
+
+
 
 	public Activity(int a_num, int u_num, String a_title, String a_content, int a_like, String a_path, int a_hits,
 			int a_star) {
@@ -65,6 +98,8 @@ public class Activity {
 	public int getA_num() {
 		return a_num;
 	}
+
+
 
 	public void setA_num(int a_num) {
 		this.a_num = a_num;
@@ -133,6 +168,16 @@ public class Activity {
 	public void setA_star(int a_star) {
 		this.a_star = a_star;
 	}
+	
+
+	public String getU_name() {
+		return u_name;
+	}
+	
+	public void setU_name(String u_name) {
+		this.u_name = u_name;
+	}
+	
 
 	public boolean matchU_num(int u_num) {
 		return this.u_num == u_num;
