@@ -161,18 +161,15 @@ public class MessageDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
-		String sql = "select rownum, m_num, d.u_name, d.u_id, m_title, m_writedate from("
-				+ "select rownum rnum, m_num, u_num, m_title, m_content,m_writedate,m_to from ("
-				+ "select * from message m) where rownum <= ? "
-				+ ")join dateuser d using(u_num) where rnum >= ? and m_num in("
-				+ "select m.m_num from message m, dateuser d where m.u_num = d.u_num and m.m_to = ?)"
-				+ " order by m_writedate desc";
+		String sql = "select rownum, m_num, u_name, u_id, m_title, m_writedate from(select m_num, u_name, u_id, m_title, m_writedate from "
+	            + "(select rownum rn,u_num, m_num, m_title, m_writedate,m_to from(select * from message m) where rownum <= ?) join dateuser d using(u_num) "
+	            + "where m_to=? and rn >= ? order by m_writedate) order by rownum desc";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, endRow);
-			pstmt.setInt(2, firstRow);
-			pstmt.setString(3, u_id);
+			pstmt.setInt(3, firstRow);
+			pstmt.setString(2, u_id);
 			 
 
 			rs = pstmt.executeQuery();
