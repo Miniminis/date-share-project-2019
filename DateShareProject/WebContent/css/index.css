@@ -12,10 +12,14 @@ html {
 	background-size: cover;
 }
 
-
 a {
 	text-decoration: none;
 	color: black;
+}
+
+a: hover,
+a: active {
+	text-decoration: none;
 }
 
 body {
@@ -25,8 +29,15 @@ body {
 #wrap {
 	background-color: transparent;
 }
+#content {
+	background-color: transparent;
+}
 
-
+.carousel {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  height: 400px;
+}
 
 #main_wrap {
 	width: 980px;
