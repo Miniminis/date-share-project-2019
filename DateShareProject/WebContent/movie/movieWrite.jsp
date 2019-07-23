@@ -63,7 +63,7 @@
 			            	</div>			           
 			           	</div>
 			           	<hr>
-			           	<textarea name="m_content" class="transparent pd-10" rows="15" cols="78" placeholder="내용을 입력해주세요"></textarea>
+			           	<textarea name="m_content" class="transparent pd-10" rows="15" cols="85" placeholder="내용을 입력해주세요"></textarea>
 	           			<hr>
 		            	<input type="submit" value="글 등록하기" class="btn btn-md btn-outline-secondary btn-block">
             		</form>

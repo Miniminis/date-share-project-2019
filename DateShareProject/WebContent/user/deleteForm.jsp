@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,26 +22,24 @@
             <%@include file="../frame/nav.jsp" %>
         </div>
         <div id="content">
-            
+      <div id="login_form_wrap">
             
 		<h3>회원탈퇴 페이지</h3>
-		<hr>
 		<form action="deleteMember.jsp" method="post">
-		<table>
-			<tr>
-			<td>아이디</td>
-			<td><input type="text" name="u_id"></td>   <!-- value값 넣기 -->
-			</tr>
-			<tr>
-				<td>비밀번호</td>
-				<td><input type="password" name="u_pw"></td>
-			</tr>
-		</table><br>
-		
-		<input type="submit" value="회원탈퇴">
-		<input type="button" value="취소" onclick="location.href='../main.jsp'">
+		<div>
+			아이디<input class="input_t" type="text" name="u_id" value="<%=user.getU_id() %>" readonly>
+		</div>
+		<div>
+			비밀번호<input class="input_t" type="password" name="u_pw">
+		</div>
+		<div>
+			<input type="submit" value="회원탈퇴" class="input_ba">
+		</div>
+		<div>
+			<input type="button" value="취소" class="input_ba" onclick="location.href='../main.jsp'">
+		</div>
 		</form>
-            
+           </div> 
         </div>
         <div id="footer">
             <%@include file="../frame/footer.jsp" %>
@@ -49,17 +48,3 @@
     </div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

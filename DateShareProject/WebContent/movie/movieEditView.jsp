@@ -68,22 +68,22 @@
 			        		<strong class="align-left mr-3">추천별점     </strong>
 			            		<div class="starRev align-left">
 								  <span class="starR1 on">1</span>
-								  <span class="starR2">2</span>
-								  <span class="starR1">3</span>
-								  <span class="starR2">4</span>
-								  <span class="starR1">5</span>
-								  <span class="starR2">6</span>
-								  <span class="starR1">7</span>
-								  <span class="starR2">8</span>
-								  <span class="starR1">9</span>
-								  <span class="starR2">10</span>
+								  <span class="starR2 on">2</span>
+								  <span class="starR1 on">3</span>
+								  <span class="starR2 on">4</span>
+								  <span class="starR1 on">5</span>
+								  <span class="starR2 on">6</span>
+								  <span class="starR1 on">7</span>
+								  <span class="starR2 on">8</span>
+								  <span class="starR1 on">9</span>
+								  <span class="starR2 on">10</span>
 								</div>
 		            		<input type="hidden" id="mStar" name="m_star" class="mr-5" value="<%= movieContent.getM_star() %>">
 			        	</div>			           
 			       	</div>
 			       	<hr>
 			       	<div class="mr-30">
-	            		<textarea name="m_content" class="transparent pd-10" rows="15" cols="75">
+	            		<textarea name="m_content" class="transparent pd-10" rows="15" cols="85">
 	            			<%= movieContent.getM_content() %>
 	            		</textarea>
 	            	</div>

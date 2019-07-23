@@ -39,7 +39,7 @@
 						</div>
 						<div>
 							<input class="input_b" type="submit" value="로그인">
-							<a href="user/insertForm.jsp" class="input_ba">회원가입</a>
+							<a href="member/insertForm.jsp" class="input_ba">회원가입</a>
 						</div>
 					</form>
 				</div>
