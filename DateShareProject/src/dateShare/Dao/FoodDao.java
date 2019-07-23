@@ -26,37 +26,6 @@ public class FoodDao {
 	private FoodDao() {
 	}
 
-	// 게시글 insert - 파일업로드 전
-	/*
-	public int insert(Connection conn, Food food) {
-		int rCnt = 0;
-		PreparedStatement pstmt = null;
-
-		try {
-			String sql = "insert into food values (food_seq.nextVal,?,?,?,sysdate,?,0,?)";
-
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setInt(1, food.getU_num()); // 회원번호
-			pstmt.setString(2, food.getF_title()); // 제목
-			pstmt.setString(3, food.getF_content()); // 내용
-			pstmt.setString(4, "../images/" + food.getF_path()); // 파일 경로
-			pstmt.setInt(5, food.getF_star()); // 평점
-
-			rCnt = pstmt.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return rCnt;
-	}
-	*/
 	
 	// 게시글 insert
 	public int insert(Connection conn, Food food) {
@@ -64,16 +33,10 @@ public class FoodDao {
 		PreparedStatement pstmt = null;
 
 		try {
-			//String sql ="insert into Food values(food_seq.nextVal, 5, ?, ?, sysdate, ?, default, ?)";
 			String sql ="insert into Food values(food_seq.nextVal, ?, ?, ?, sysdate, ?, default, ?)";
 			
 			pstmt = conn.prepareStatement(sql);
 			
-			/*
-			 * pstmt.setString(1, food.getF_title()); // 제목 pstmt.setString(2,
-			 * food.getF_content()); // 내용 pstmt.setString(3, food.getF_path()); // 파일 경로
-			 * pstmt.setInt(4, food.getF_star()); // 별점
-			 */
 			pstmt.setInt(1, food.getU_num()); // 회원번호
 			pstmt.setString(2, food.getF_title()); // 제목
 			pstmt.setString(3, food.getF_content()); // 내용
@@ -93,27 +56,6 @@ public class FoodDao {
 		return rCnt;
 	}
 
-	// 게시글 update - 파일 업로드 전 
-	/*
-	 * public int update(Connection conn, Food food) { int rCnt = 0;
-	 * PreparedStatement pstmt = null;
-	 * 
-	 * try { String sql =
-	 * "update food set f_title=?, f_content=?, f_path=? where f_num=?";
-	 * 
-	 * pstmt = conn.prepareStatement(sql);
-	 * 
-	 * pstmt.setString(1, food.getF_title()); // 제목 pstmt.setString(2,
-	 * food.getF_content()); // 내용 pstmt.setString(3, "../images/" +
-	 * food.getF_path()); // 파일 경로 pstmt.setInt(4, food.getF_num()); // 회원번호
-	 * 
-	 * rCnt = pstmt.executeUpdate();
-	 * 
-	 * } catch (SQLException e) { e.printStackTrace(); } finally { try {
-	 * pstmt.close(); } catch (SQLException e) { e.printStackTrace(); } } return
-	 * rCnt; }
-	 */
-	
 	public int update(Connection conn, Food food) {
 		int rCnt = 0;
 		PreparedStatement pstmt = null;
@@ -144,8 +86,7 @@ public class FoodDao {
 		return rCnt;
 	}
 
-	// 게시글 1개 select - 상세보기와 delete에 쓰려고한다! - 라이크 없을 때
-	
+	// 게시글 1개 select - delete에 쓰려고한다! 
 	public Food select(Connection conn, int f_num) {
 		Food food = null;
 
@@ -179,44 +120,43 @@ public class FoodDao {
 
 		return food;
 	}
+	
+	// 디테일 뷰에 사용할 것 
+	public Food selectDetail(Connection conn, int f_num) {
+		Food food = null;
 
-	/*
-	// 게시글 1개 select - 상세보기와 delete에 쓰려고한다! - 라이크 있을 때
-		public Food select(Connection conn, int f_num) {
-			Food food = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
+		String sql = "select f_num,u_num,f_title,f_content,f_writedate,f_path,f_hits,f_star,u_name from food f join dateuser u using(u_num) where f_num=?";
 
-			String sql = "select f_num, u_num, f_title, f_content, f_writedate,(select count(*) from f_like where f_num=23) as \"f_like\", f_path, f_hits, f_star from food where f_num=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, f_num);
 
-			try {
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, f_num);
+			rs = pstmt.executeQuery();
 
-				rs = pstmt.executeQuery();
-
-				if (rs.next()) {
-					// 일단 다 가져와봤다
-					food = new Food();
-					food.setF_num(rs.getInt("f_num"));
-					food.setU_num(rs.getInt("u_num"));
-					food.setF_title(rs.getString("f_title"));
-					food.setF_content(rs.getString("f_content"));
-					food.setF_writedate(rs.getDate("f_writedate"));
-					food.setF_like(rs.getInt("f_like"));
-					food.setF_path(rs.getString("f_path"));
-					food.setF_hits(rs.getInt("f_hits"));
-					food.setF_star(rs.getInt("f_star"));
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (rs.next()) {
+				// 일단 다 가져와봤다
+				food = new Food();
+				food.setF_num(rs.getInt("f_num"));
+				food.setU_num(rs.getInt("u_num"));
+				food.setF_title(rs.getString("f_title"));
+				food.setF_content(rs.getString("f_content"));
+				food.setF_writedate(rs.getDate("f_writedate"));
+				food.setF_path(rs.getString("f_path"));
+				food.setF_hits(rs.getInt("f_hits"));
+				food.setF_star(rs.getInt("f_star"));
+				food.setU_name(rs.getString("u_name"));
 			}
-
-			return food;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-	*/
+		return food;
+	}
+	
+
 	// select count (전체 글의 개수)
 	public int selectCount(Connection conn) {
 		Statement stmt = null;
@@ -252,24 +192,6 @@ public class FoodDao {
 				+ " (select count(*) from f_like f2 where f2.f_num = at.f_num) as f_like , f_path, f_hits, f_star "
 				+ " from (select rownum rnum, f_num, u_num, f_title, f_content, f_writedate, f_path, f_hits, f_star "
 				+ " from (select * from food f order by f.f_num desc ) where rownum <= ? ) at where rnum >= ?";
-
-		/*
-		 * //like가 없는 상태 String sql =
-		 * "select f_num, u_num, f_title, f_content, f_writedate, f_path, f_hits, f_star from ("
-		 * +
-		 * "select rownum rnum, f_num, u_num, f_title, f_content, f_writedate, f_path, f_hits, f_star from ("
-		 * +
-		 * "select * from food f order by f.f_num desc ) where rownum <= ? ) where rnum >= ?"
-		 * ;
-		 */
-
-		// 필요한 것만 한 경우
-		/*
-		 * select f_num, u_num, f_writedate, f_path, f_title, f_hits, f_star from (
-		 * select rownum rnum, f_num, u_num, f_writedate, f_path, f_title, f_hits,
-		 * f_star from ( select * from food f order by f.f_num desc ) where rownum <= ?
-		 * ) where rnum >= ?;
-		 */
 
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -390,6 +312,8 @@ public class FoodDao {
 
 	// 좋아요 누르면 테이블 insert
 	public int addLike(Connection conn, int u_num, int f_num) {
+		System.out.println("addlike 실행됨");
+		
 		int rCnt = 0;
 		PreparedStatement pstmt = null;
 
@@ -417,6 +341,7 @@ public class FoodDao {
 
 	// 좋아요 취소하면 delete
 	public int cancelLike(Connection conn, int u_num, int f_num) {
+		System.out.println("cancelLike 실행됨");
 		int rCnt = 0;
 		PreparedStatement pstmt = null;
 
@@ -466,8 +391,6 @@ public class FoodDao {
 		}
 		return rCnt;
 	}
-	
-	
 	
 
 }
