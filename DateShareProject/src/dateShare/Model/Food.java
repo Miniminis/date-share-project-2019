@@ -12,15 +12,11 @@ public class Food {
 	private String f_path; // 파일 경로
 	private int f_hits; // 조회수
 	private int f_star; // 별점
+	private String u_name; // 회원 이름
 
 	public Food() {
 	}
 
-	/*
-	 * public Food( String f_title, String f_content, String f_path, int f_star) {
-	 * this.f_title = f_title; this.f_content = f_content; this.f_path = f_path;
-	 * this.f_star = f_star; }
-	 */
 	public Food(int u_num, String f_title, String f_content, String f_path, int f_star) {
 		this.u_num = u_num;
 		this.f_title = f_title;
@@ -49,6 +45,23 @@ public class Food {
 		this.f_path = f_path;
 		this.f_hits = f_hits;
 		this.f_star = f_star;
+	}
+
+	
+	
+	public Food(int f_num, int u_num, String f_title, String f_content, Date f_writedate, int f_like, String f_path,
+			int f_hits, int f_star, String u_name) {
+		super();
+		this.f_num = f_num;
+		this.u_num = u_num;
+		this.f_title = f_title;
+		this.f_content = f_content;
+		this.f_writedate = f_writedate;
+		this.f_like = f_like;
+		this.f_path = f_path;
+		this.f_hits = f_hits;
+		this.f_star = f_star;
+		this.u_name = u_name;
 	}
 
 	public int getF_num() {
@@ -126,5 +139,14 @@ public class Food {
 	public boolean matchU_num(int u_num) {
 		return this.u_num == u_num;
 	}
+
+	public String getU_name() {
+		return u_name;
+	}
+
+	public void setU_name(String u_name) {
+		this.u_name = u_name;
+	}
+
 
 }
